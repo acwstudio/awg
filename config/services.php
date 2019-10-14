@@ -12,6 +12,8 @@ return [
     | location for this type of information, allowing packages to have
     | a conventional file to locate the various service credentials.
     |
+    | Add GuzzleHttp for My Store service.
+    |
     */
 
     'mailgun' => [
