@@ -1,57 +1,150 @@
-@extends('auth.layouts')
+@extends('shop.layouts')
 
 @section('content')
-<div class="container">
-    <div class="card card-register mx-auto mt-5">
-        <div class="card-header">{{ __('Register') }}</div>
-        <div class="card-body">
-            <form>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <input type="text" id="firstName" class="form-control" placeholder="First name"
-                                       required="required" autofocus="autofocus">
-                                <label for="firstName">First name</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <input type="text" id="lastName" class="form-control" placeholder="Last name" required="required">
-                                <label for="lastName">Last name</label>
-                            </div>
-                        </div>
-                    </div>
+
+    <div class="main-page-banner home-3">
+
+    @include('shop.vertical-menu')
+    <!-- Breadcrumb Start -->
+        <div class="breadcrumb-area mt-30">
+            <div class="container">
+                <div class="breadcrumb">
+                    <ul class="d-flex align-items-center">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Register</a></li>
+                        {{--<li class="active"><a href="contact.html">contact us</a></li>--}}
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <div class="form-label-group">
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="required">
-                        <label for="inputEmail">Email address</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
-                                <label for="inputPassword">Password</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required">
-                                <label for="confirmPassword">Confirm password</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a class="btn btn-primary btn-block" href="login.html">Register</a>
-            </form>
-            <div class="text-center">
-                <a class="d-block small mt-3" href="login.html">Login Page</a>
-                <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
             </div>
+            <!-- Container End -->
         </div>
     </div>
-</div>
+    <!-- Register Account Start -->
+    <div class="register-account ptb-100 ptb-sm-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="register-title">
+                        <h3 class="mb-10">REGISTER ACCOUNT</h3>
+                        <p class="mb-10">If you already have an account with us, please login at the login page.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Row End -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="form-register" method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <fieldset>
+                            <legend>Your Personal Details</legend>
+                            <div class="form-group d-md-flex align-items-md-center">
+                                <label class="control-label col-md-2" for="firstName"><span class="require">*</span>First
+                                    Name</label>
+                                <div class="col-md-10">
+                                    <input id="firstName" type="text" class="form-control @error('first_name')
+                                    is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autofocus>
+
+                                    @error('first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group d-md-flex align-items-md-center">
+                                <label class="control-label col-md-2" for="lastName"><span class="require">*</span>Last
+                                    Name</label>
+                                <div class="col-md-10">
+                                    <input id="lastName" type="text" class="form-control @error('last_name')
+                                    is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required>
+
+                                    @error('last_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group d-md-flex align-items-md-center">
+                                <label class="control-label col-md-2" for="email"><span class="require">*</span>Enter
+                                    you email address here...</label>
+                                <div class="col-md-10">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                           name="email" value="{{ old('email') }}" required>
+
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group d-md-flex align-items-md-center">
+                                <label class="control-label col-md-2" for="number">
+                                    <span class="require">*</span>Telephone</label>
+                                <div class="col-md-10">
+                                    <input id="number" type="tel" class="form-control @error('phone') is-invalid @enderror"
+                                           name="phone" value="{{ old('phone') }}" required>
+
+                                    @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Your Password</legend>
+                            <div class="form-group d-md-flex align-items-md-center">
+                                <label class="control-label col-md-2" for="password">
+                                    <span class="require">*</span>Password:</label>
+                                <div class="col-md-10">
+                                    <input id="password" type="password" class="form-control @error('password')
+                                    is-invalid @enderror" name="password" required>
+
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group d-md-flex align-items-md-center">
+                                <label class="control-label col-md-2" for="password-confirm"><span class="require">*</span>Confirm
+                                    Password</label>
+                                <div class="col-md-6">
+                                    <input id="password-confirm" type="password" class="form-control"
+                                           name="password_confirmation" required>
+                                </div>
+
+                            </div>
+                        </fieldset>
+                        {{--<fieldset class="newsletter-input">--}}
+                            {{--<legend>Newsletter</legend>--}}
+                            {{--<div class="form-group d-md-flex align-items-md-center">--}}
+                                {{--<label class="col-md-2 control-label">Subscribe</label>--}}
+                                {{--<div class="col-md-10 radio-button">--}}
+                                    {{--<label class="radio-inline"><input type="radio" name="optradio">Yes</label>--}}
+                                    {{--<label class="radio-inline"><input type="radio" name="optradio">No</label>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</fieldset>--}}
+                        <div class="terms">
+                            <div class="float-md-right">
+                                <span>I have read and agree to the <a href="#"
+                                                                      class="agree"><b>Privacy Policy</b></a></span>
+                                <input type="checkbox" name="agree" value="1"> &nbsp;
+                                <input type="submit" value="Continue" class="return-customer-btn">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </div>
+    <!-- Register Account End -->
 @endsection

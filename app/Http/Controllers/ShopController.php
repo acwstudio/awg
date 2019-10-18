@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 /**
- * Class HomeController
+ * Class ShopController
  *
  * @package App\Http\Controllers
  */
-class HomeController extends Controller
+class ShopController extends Controller
 {
     /**
      * Create a new controller instance.

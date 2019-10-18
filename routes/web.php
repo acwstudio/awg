@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::resource('products', 'Api\ProductController');
 
 Auth::routes();
@@ -35,4 +31,4 @@ Route::namespace('Admin')->middleware(['auth'])->group(function () {
 
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'ShopController@index')->name('shop');

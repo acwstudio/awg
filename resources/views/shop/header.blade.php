@@ -36,6 +36,15 @@
                         <ul class="ht-dropdown">
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </ul>
                         <!-- Dropdown End -->
                     </li>
@@ -178,7 +187,7 @@
                 <div class="col-xl-9 col-lg-8 col-md-12 ">
                     <nav class="d-none d-lg-block">
                         <ul class="header-bottom-list d-flex">
-                            <li class="active"><a href="{{ route('home') }}">home</a></li>
+                            <li class="active"><a href="{{ route('shop') }}">home</a></li>
                             <li><a href="shop.html">shop<i class="fa fa-angle-down"></i></a>
                                 <!-- Home Version Dropdown Start -->
                                 <ul class="ht-dropdown dropdown-style-two">
@@ -215,7 +224,7 @@
                     <div class="mobile-menu d-block d-lg-none">
                         <nav>
                             <ul>
-                                <li><a href="{{ route('home') }}">home</a></li>
+                                <li><a href="{{ route('shop') }}">home</a></li>
                                 <li><a href="shop.html">shop</a>
                                     <!-- Mobile Menu Dropdown Start -->
                                     <ul>
