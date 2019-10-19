@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 /**
@@ -28,6 +30,12 @@ class ShopController extends Controller
      */
     public function index()
     {
-        return view('shop.home');
+        $user = auth()->user();
+//        \Illuminate\Support\Facades\Auth::user()->first_name;
+        //$user_id = Auth::user()->getAuthIdentifier();
+
+        //$user = User::findOrFail($user_id);
+        //dd($user);
+        return view('shop.home', compact('user'));
     }
 }

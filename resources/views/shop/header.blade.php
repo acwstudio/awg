@@ -34,17 +34,21 @@
                     <li><a href="#">My Account<i class="lnr lnr-chevron-down"></i></a>
                         <!-- Dropdown Start -->
                         <ul class="ht-dropdown">
+                            @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            @endguest
+                            @auth
+                            <li><a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
-                            </a>
+                            </a></li>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
+                            @endauth
                         </ul>
                         <!-- Dropdown End -->
                     </li>
@@ -162,11 +166,18 @@
                             <li><a href="#"><i class="lnr lnr-heart"></i><span
                                             class="my-cart"><span>Wish</span><span>list (0)</span></span></a>
                             </li>
-                            <li><a href="#"><i class="lnr lnr-user"></i><span
-                                            class="my-cart"><span> <strong>Sign in</strong> Or</span><span> Join My Site</span></span></a>
-
-
+                            @guest
+                            <li><a href="{{ route('login') }}"><i class="lnr lnr-user"></i><span
+                                            class="my-cart"><span> <strong>Sign in</strong> Or</span>
+                                        <span> Join My Site</span></span></a>
                             </li>
+                            @endguest
+                            @auth
+                                <li><a href="{{ route('account') }}"><i class="lnr lnr-user"></i><span
+                                            class="my-cart"><span> <strong>Account</strong></span>
+                                        <span> {{ Auth::user()->first_name }}</span></span></a>
+                                </li>
+                            @endauth
                         </ul>
                     </div>
                 </div>

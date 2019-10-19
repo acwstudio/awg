@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 /**
@@ -17,6 +19,11 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return view('admin.account');
+        $user_id = Auth::user()->getAuthIdentifier();
+
+        $user = User::findOrFail($user_id);
+//        $user = User::first()->first_name;
+
+        return view('admin.account', compact('user'));
     }
 }
