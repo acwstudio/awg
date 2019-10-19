@@ -2,6 +2,7 @@
     <!-- Header Top Start Here -->
     <div class="header-top-area home-4">
         <div class="container">
+
             <!-- Header Top Start -->
             <div class="header-top">
                 <ul>
@@ -37,8 +38,8 @@
                             @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
-                            @endguest
-                            @auth
+                            @else
+                            <li><a href="{{ route('account') }}">{{ Auth::user()->first_name }}</a></li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -48,7 +49,7 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
-                            @endauth
+                            @endguest
                         </ul>
                         <!-- Dropdown End -->
                     </li>
@@ -59,6 +60,7 @@
         <!-- Container End -->
     </div>
     <!-- Header Top End Here -->
+
     <!-- Header Middle Start Here -->
     <div class="header-middle ptb-15 black-bg2 home-4">
         <div class="container">
