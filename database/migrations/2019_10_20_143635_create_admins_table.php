@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateUsersTable
+ * Class CreateAdminsTable
  */
-class CreateUsersTable extends Migration
+class CreateAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,16 +16,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->bigIncrements('id');
-//            $table->string('first_name');
-//            $table->string('first_name');
             $table->string('name');
             $table->string('email')->unique();
-            //$table->string('phone');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            //$table->string('api_token')->nullable();
+            $table->string('api_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -38,6 +35,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('admins');
     }
 }

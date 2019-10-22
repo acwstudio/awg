@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
  */
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     /**
      * @return string
      */
@@ -19,4 +24,5 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard');
     }
+
 }

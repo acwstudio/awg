@@ -35,20 +35,21 @@
                     <li><a href="#">My Account<i class="lnr lnr-chevron-down"></i></a>
                         <!-- Dropdown Start -->
                         <ul class="ht-dropdown">
-                            @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            @guest('customer')
+                                <li><a href="{{ route('customer.login') }}">Login</a></li>
+                                <li><a href="{{ route('customer.register') }}">Register</a></li>
                             @else
-                            <li><a href="{{ route('account') }}">{{ Auth::user()->first_name }}</a></li>
-                            <li><a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
+                                <li><a href="{{ route('customer') }}">{{ $user->first_name }}</a></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a></li>
+                                        {{ __('Logout') }}
+                                    </a></li>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                      style="display: none;">
+                                    @csrf
+                                </form>
                             @endguest
                         </ul>
                         <!-- Dropdown End -->
@@ -122,7 +123,8 @@
                                         <!-- Cart Box Start -->
                                         <div class="single-cart-box">
                                             <div class="cart-img">
-                                                <a href="#"><img src="{{ asset('shop/img/products/1.jpg') }}" alt="cart-image"></a>
+                                                <a href="#"><img src="{{ asset('shop/img/products/1.jpg') }}"
+                                                                 alt="cart-image"></a>
                                                 <span class="pro-quantity">1X</span>
                                             </div>
                                             <div class="cart-content">
@@ -137,7 +139,8 @@
                                         <!-- Cart Box Start -->
                                         <div class="single-cart-box">
                                             <div class="cart-img">
-                                                <a href="#"><img src="{{ asset('shop/img/products/2.jpg') }}" alt="cart-image"></a>
+                                                <a href="#"><img src="{{ asset('shop/img/products/2.jpg') }}"
+                                                                 alt="cart-image"></a>
                                                 <span class="pro-quantity">1X</span>
                                             </div>
                                             <div class="cart-content">
@@ -168,18 +171,18 @@
                             <li><a href="#"><i class="lnr lnr-heart"></i><span
                                             class="my-cart"><span>Wish</span><span>list (0)</span></span></a>
                             </li>
-                            @guest
-                            <li><a href="{{ route('login') }}"><i class="lnr lnr-user"></i><span
-                                            class="my-cart"><span> <strong>Sign in</strong> Or</span>
+                            @guest('customer')
+                                <li><a href="{{ route('customer.login') }}"><i class="lnr lnr-user"></i><span
+                                                class="my-cart"><span> <strong>Sign in</strong> Or</span>
                                         <span> Join My Site</span></span></a>
-                            </li>
-                            @endguest
-                            @auth
-                                <li><a href="{{ route('account') }}"><i class="lnr lnr-user"></i><span
-                                            class="my-cart"><span> <strong>Account</strong></span>
-                                        <span> {{ Auth::user()->first_name }}</span></span></a>
                                 </li>
-                            @endauth
+                            @else
+                                {{--@auth('customer')--}}
+                                <li><a href="{{ route('customer') }}"><i class="lnr lnr-user"></i><span
+                                                class="my-cart"><span> <strong>Account</strong></span>
+                                        <span> {{ $user->first_name }}</span></span></a>
+                                </li>
+                            @endguest
                         </ul>
                     </div>
                 </div>

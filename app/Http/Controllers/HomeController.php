@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Auth;
 use Illuminate\Http\Request;
 
 /**
- * Class ShopController
+ * Class HomeController
  *
  * @package App\Http\Controllers
  */
-class ShopController extends Controller
+class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -20,7 +18,7 @@ class ShopController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth:admin');
     }
 
     /**
@@ -30,8 +28,6 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $user = Auth::guard('customer')->user();
-
-        return view('shop.home', compact('user'));
+        return view('home');
     }
 }
