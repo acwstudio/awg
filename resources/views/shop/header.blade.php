@@ -68,7 +68,7 @@
             <div class="row align-items-center no-gutters">
                 <div class="col-lg-3 col-md-12">
                     <div class="logo mb-all-30">
-                        <a href="index.html"><img src="{{ asset('shop/img/logo/logo2.png') }}" alt="logo-image"></a>
+                        <a href="{{ route('shop') }}"><img src="{{ asset('shop/img/logo/logo2.png') }}" alt="logo-image"></a>
                     </div>
                 </div>
                 <!-- Categorie Search Box Start Here -->

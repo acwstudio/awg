@@ -62,8 +62,6 @@ Route::namespace('Customer')->group(function () {
     Route::prefix('/customer')->group(function () {
 
         Route::name('customer.')->group(function () {
-//Route::group(['guard' => 'customer'], function () {
-
 
             /**
              * Customer Auth Route(s)
@@ -93,7 +91,7 @@ Route::namespace('Customer')->group(function () {
 //        Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
 
             });
-//});
+
         });
 
         Route::get('/', 'AccountController@index')->name('customer');

@@ -32,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/admin/dashboard';
 
     /**
      * Create a new controller instance.
@@ -64,8 +64,4 @@ class LoginController extends Controller
         return Auth::guard('admin');
     }
 
-//    public function redirectPath()
-//    {
-//
-//    }
 }

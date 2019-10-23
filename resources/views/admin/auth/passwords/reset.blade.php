@@ -39,7 +39,7 @@
 
                         <input id="email" type="email"
                                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                               name="email" placeholder="email" value="{{ old('email') }}" required>
+                               name="email" placeholder="email" value="{{ $email ?? old('email') }}" required>
 
                         @if ($errors->has('email'))
                             <span class="invalid-feedback"
@@ -74,7 +74,7 @@
 
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <button type="submit" class="btn btn-primary btn-block">Update Password</button>
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="{{ route('admin.register') }}">Register an Account</a>
