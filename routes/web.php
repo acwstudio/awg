@@ -14,7 +14,7 @@
 //Route::resource('products', 'Api\ProductController');
 
 // Default Auth Route(s)
-Auth::routes();
+//Auth::routes();
 
 // Admin part
 Route::namespace('Admin')->group(function () {

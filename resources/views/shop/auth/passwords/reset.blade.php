@@ -32,7 +32,7 @@
             <!-- Row End -->
             <div class="row">
                 <div class="col-sm-12">
-                    <form class="form-register" method="POST" action="{{ route('password.update') }}">
+                    <form class="form-register" method="POST" action="{{ route('customer.password.update') }}">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">

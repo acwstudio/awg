@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Notifications\ResetCustomerPasswordNotification;
+use App\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,8 +16,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Customer extends Authenticatable
 {
     use Notifiable;
-
-    protected $guard = 'customer';
 
     /**
      * The attributes that are mass assignable.
@@ -44,4 +44,16 @@ class Customer extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $guard = 'customer';
+
+        $this->notify(new ResetPassword($token, $guard));
+    }
 }

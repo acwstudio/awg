@@ -40,13 +40,13 @@
                                 <li><a href="{{ route('customer.register') }}">Register</a></li>
                             @else
                                 <li><a href="{{ route('customer') }}">{{ $user->first_name }}</a></li>
-                                <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                <li><a class="dropdown-item" href="{{ route('customer.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a></li>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                <form id="logout-form" action="{{ route('customer.logout') }}" method="POST"
                                       style="display: none;">
                                     @csrf
                                 </form>
@@ -262,9 +262,9 @@
                                 <li><a href="#">pages</a>
                                     <!-- Mobile Menu Dropdown Start -->
                                     <ul>
-                                        <li><a href="{{ route('register') }}">register</a></li>
-                                        <li><a href="{{ route('login') }}">sign in</a></li>
-                                        <li><a href="forgot-password.html">forgot password</a></li>
+                                        <li><a href="{{ route('customer.register') }}">register</a></li>
+                                        <li><a href="{{ route('customer.login') }}">sign in</a></li>
+                                        <li><a href="{{ route('customer.password.request') }}">forgot password</a></li>
                                         <li><a href="404.html">404</a></li>
                                     </ul>
                                     <!-- Mobile Menu Dropdown End -->
