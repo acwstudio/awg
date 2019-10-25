@@ -11,10 +11,19 @@
 |
 */
 
-//Route::resource('products', 'Api\ProductController');
+// MyStore Route(s)
+Route::namespace('MyStore')->group(function () {
 
-// Default Auth Route(s)
-//Auth::routes();
+    Route::prefix('mystore')->group(function () {
+
+        Route::name('mystore.')->group(function () {
+
+            Route::get('/products', 'ProductController@syncProductsCatalog')->name('sync.product');
+            Route::get('/categories', 'CategoryController@syncProductsCategory')->name('sync.category');
+
+        });
+    });
+});
 
 // Admin part
 Route::namespace('Admin')->group(function () {
@@ -45,13 +54,9 @@ Route::namespace('Admin')->group(function () {
                 Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
                 Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
 
-                //Email Verification Route(s)
-//        Route::get('email/verify', 'VerificationController@show')->name('verification.notice');
-//        Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
-//        Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
-
             });
         });
+
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     });
 });

@@ -4,8 +4,8 @@ return [
     'url' => [
         'protocol' => 'https://',
         'domain' => 'online.moysklad.ru',
-        'port' => '',
-        'api' => '/api/remap/1.2',
+//        'port' => '',
+        'api' => '/api/remap/1.1',
         'path' => '',
         'parameters' => '',
     ],

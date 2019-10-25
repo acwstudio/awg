@@ -19,7 +19,18 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->string('type');
+            $table->uuid('store_id');
+            $table->uuid('productFolder')->nullable();
+            $table->boolean('shared');
+            $table->string('version', 10);
+            $table->dateTime('updated');
             $table->string('name');
+            $table->text('description')->nullable();
+            $table->string('code')->nullable();
+            $table->string('ext_code');
+            $table->boolean('archived');
+            $table->string('path_name');
             $table->timestamps();
         });
     }

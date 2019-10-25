@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -31,7 +32,12 @@ class ShopController extends Controller
     public function index()
     {
         $user = Auth::guard('customer')->user();
+        $categories = Category::all();
+//        foreach ($categories as $category) {
+//            dump($category->categories);
+//        }
+//        dd($categories);
 
-        return view('shop.home', compact('user'));
+        return view('shop.home', compact('user', 'categories'));
     }
 }

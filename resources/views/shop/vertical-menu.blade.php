@@ -5,6 +5,7 @@
             <div class="vertical-menu mb-all-30">
                 <nav>
                     <ul class="vertical-menu-list">
+                        @foreach($categories as $category)
                         <li class=""><a href="shop.html"><span>
                                     <img src="{{ asset('shop/img/vertical-menu/1.png') }}" alt="menu-icon">
                                 </span>Automotive & Motorcycle<i class="fa fa-angle-right" aria-hidden="true"></i></a>
@@ -239,6 +240,7 @@
                                 </li>
                             </ul>
                         </li>
+                        @endforeach
                         <!-- More Categoies End -->
                     </ul>
                 </nav>
