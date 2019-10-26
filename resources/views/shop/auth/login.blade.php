@@ -1,17 +1,34 @@
 @extends('shop.layouts')
 
 @section('content')
+    <!-- Main Header Area Start Here -->
+    <header>
+        <!-- Header Middle Start Here -->
+        <div class="header-middle ptb-15 black-bg2 home-4">
+            <div class="container">
+                <div class="row align-items-center no-gutters">
+                    <div class="col-lg-3 col-md-12">
+                        <div class="logo mb-all-30">
+                            <a href="{{ route('shop') }}"><img src="{{ asset('shop/img/logo/logo2.png') }}"
+                                                               alt="logo-image"></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Header Middle End Here -->
+    </header>
+
     <div class="main-page-banner home-3">
 
-    @include('shop.vertical-menu')
     <!-- Breadcrumb Start -->
         <div class="breadcrumb-area mt-30">
             <div class="container">
                 <div class="breadcrumb">
                     <ul class="d-flex align-items-center">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="register.html">Sign in</a></li>
-                        {{--<li class="active"><a href="contact.html">contact us</a></li>--}}
+                        <li><a href="{{ route('shop') }}">Home</a></li>
+                        <li class="active"><a href="#">Sign in</a></li>
                     </ul>
                 </div>
             </div>
@@ -29,7 +46,8 @@
                         <div class="new-customer">
                             <h3 class="custom-title">new customer</h3>
                             <p class="mtb-10"><strong>Register</strong></p>
-                            <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made</p>
+                            <p>By creating an account you will be able to shop faster, be up to date on an order's
+                                status, and keep track of the orders you have previously made</p>
                             <a class="customer-btn" href="{{ route('customer.register') }}">continue</a>
                         </div>
                     </div>
@@ -45,8 +63,10 @@
                                 @csrf
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                           name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
+                                    <input id="email" type="email"
+                                           class="form-control @error('email') is-invalid @enderror"
+                                           name="email" value="{{ old('email') }}" required autocomplete="email"
+                                           autofocus
                                            placeholder="Enter your email address...">
 
                                     @error('email')
@@ -69,8 +89,9 @@
                                     @enderror
                                 </div>
 
-                                @if (Route::has('password.request'))
-                                    <p class="lost-password"><a href="{{ route('customer.password.request') }}">Forgot password?</a></p>
+                                @if (Route::has('customer.password.request'))
+                                    <p class="lost-password"><a href="{{ route('customer.password.request') }}">Forgot
+                                            password?</a></p>
                                 @endif
                                 <input type="submit" value="Login" class="return-customer-btn">
                             </form>
@@ -79,9 +100,8 @@
                 </div>
                 <!-- Returning Customer End -->
             </div>
-            <!-- Row End -->
         </div>
-        <!-- Container End -->
     </div>
     <!-- LogIn Page End -->
+    @include('shop.footer')
 @endsection

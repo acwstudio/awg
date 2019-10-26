@@ -29,14 +29,14 @@ class ServiceSyncCategories extends ServiceMyStoreBase
         $itemsURL['parameters'] = '?expand=productFolder&limit=100';
 
         $folders = $this->buildEndPoint($itemsURL);
-        //$total = $folders['meta']['size'];
+
         $data = $folders['rows'];
 
         foreach ($data as $key => $item) {
 
             $category = ResourceCategory::make($item)->resolve();
             //dump($category);
-            //Category::insert($category);
+            Category::insert($category);
 
         }
 

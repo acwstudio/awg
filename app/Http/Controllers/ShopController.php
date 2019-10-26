@@ -32,12 +32,20 @@ class ShopController extends Controller
     public function index()
     {
         $user = Auth::guard('customer')->user();
+//        dd(Category::with('children')->get());
         $categories = Category::all();
-//        foreach ($categories as $category) {
-//            dump($category->categories);
-//        }
-//        dd($categories);
+        $topLevelCategories = Category::where('category_id', '=', null)->with('children')->get();
 
-        return view('shop.home', compact('user', 'categories'));
+//        foreach ($categories as $category) {
+//            if ($category->children->count() > 0) {
+//                dump($category->children->count());
+//            } else {
+//                dump($category->name);
+//            }
+//            dump($category->parent);
+//        }
+        //dd($topLevelCategories);
+
+        return view('shop.home', compact('user', 'categories', 'topLevelCategories'));
     }
 }

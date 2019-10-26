@@ -29,9 +29,14 @@ class ServiceMyStoreBase
      */
     protected function buildEndPoint($itemsURL)
     {
-        $url = '';
-        foreach ($itemsURL as $item) {
-            $url = $url . $item;
+        $url = null;
+        if(is_array($itemsURL)) {
+            dump('array');
+            foreach ($itemsURL as $item) {
+                $url = $url . $item;
+            }
+        } else {
+            $url = $itemsURL;
         }
 
         $jsonData = json_decode($this->client->request(

@@ -1,10 +1,21 @@
 @extends('shop.layouts')
 
 @section('content')
+
+    <!-- Main Header Area Start Here -->
+    <header>
+
+        @include('shop.header-top')
+        @include('shop.header-middle')
+        @include('shop.header-bottom')
+        @include('shop.header-mobile-vmenu')
+
+    </header>
+
     <div class="main-page-banner black-bg2 home-3">
 
         @include('shop.vertical-menu')
-        {{--@include('shop.slider-area')--}}
+
         <!-- Slider Area Start Here -->
             <div class="slider_box">
                 <div class="slider-wrapper theme-default">
@@ -25,6 +36,7 @@
             <!-- Slider Area End Here -->
     </div>
 
-    <h1>Home page</h1>
+    @include('shop.like-product')
 
+    @include('shop.footer')
 @endsection

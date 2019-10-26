@@ -23,9 +23,35 @@ class ServiceSyncProducts extends ServiceMyStoreBase
     public function srvGetProducts()
     {
         $itemsURL = config('api-store.url');
-        $itemsURL['path'] = '/entity/product/001f2b51-eefb-11e8-9107-50480003dc02';
-        $itemsURL['parameters'] = '?limit=10&expand=productFolder.productFolder';
+        $itemsURL['path'] = '/entity/product';
+        $itemsURL['parameters'] = '?limit=100&expand=productFolder.productFolder';
 
-        return ResourceProduct::make($this->buildEndPoint($itemsURL))->resolve();
+
+        do {
+            $products = $this->buildEndPoint($itemsURL);
+            $itemsURL = key_exists('nextHref', $products['meta']) ? $products['meta']['nextHref'] : false;
+            dump($products['meta']['offset']);
+        } while ($itemsURL);
+
+        $data = $products['rows'];
+        dd($products['rows']);
+//        foreach ($data as $key => $item) {
+//
+//            $category = ResourceCategory::make($item)->resolve();
+//            //dump($category);
+//            Category::insert($category);
+//
+//        }
+
+//        $collection = Category::all();
+//        $multiplied = $collection->map(function ($item, $key) use ($collection) {
+//            if ($item->productFolder) {
+//                /** @var Category $item */
+//                $category_id = $collection->where('store_id', $item->productFolder)->first()->id;
+//                $item->update(['category_id' => $category_id]);
+//            }
+//        });
+
+        return 'ok';
     }
 }

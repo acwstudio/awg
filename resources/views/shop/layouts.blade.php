@@ -47,11 +47,7 @@
 <!-- Main Wrapper Start Here -->
 <div class="wrapper">
 
-    @include('shop.header')
-
     @yield('content')
-
-    @include('shop.footer')
 
 </div>
 <!-- Main Wrapper End Here -->

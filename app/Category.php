@@ -19,13 +19,20 @@ class Category extends Model
      */
     protected $fillable = ['category_id'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parent()
+    {
+        return $this->belongsTo('App\Category', 'id', 'category_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function categories(){
-
-        return $this->hasMany('App\Category', 'category_id');
-
+    public function children()
+    {
+        return $this->hasMany('App\Category', 'category_id', 'id');
     }
+
 }

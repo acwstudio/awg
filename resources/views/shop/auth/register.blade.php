@@ -2,16 +2,34 @@
 
 @section('content')
 
+    <!-- Main Header Area Start Here -->
+    <header>
+        <!-- Header Middle Start Here -->
+        <div class="header-middle ptb-15 black-bg2 home-4">
+            <div class="container">
+                <div class="row align-items-center no-gutters">
+                    <div class="col-lg-3 col-md-12">
+                        <div class="logo mb-all-30">
+                            <a href="{{ route('shop') }}"><img src="{{ asset('shop/img/logo/logo2.png') }}"
+                                                               alt="logo-image"></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Header Middle End Here -->
+    </header>
+
     <div class="main-page-banner home-3">
 
-    @include('shop.vertical-menu')
     <!-- Breadcrumb Start -->
         <div class="breadcrumb-area mt-30">
             <div class="container">
                 <div class="breadcrumb">
                     <ul class="d-flex align-items-center">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#">Register</a></li>
+                        <li><a href="{{ route('shop') }}">Home</a></li>
+                        <li class="active"><a href="#">Register</a></li>
                         {{--<li class="active"><a href="contact.html">contact us</a></li>--}}
                     </ul>
                 </div>
@@ -163,9 +181,11 @@
                     </form>
                 </div>
             </div>
-            <!-- Row End -->
+
         </div>
         <!-- Container End -->
     </div>
     <!-- Register Account End -->
+
+    @include('shop.footer')
 @endsection
