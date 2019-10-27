@@ -2,7 +2,10 @@
 
 namespace App\Services\MyStore;
 
+use App\Category;
 use App\Http\Resources\ResourceProduct;
+use App\Product;
+use Storage;
 
 /**
  * Class ServiceSyncProducts
@@ -22,36 +25,37 @@ class ServiceSyncProducts extends ServiceMyStoreBase
      */
     public function srvGetProducts()
     {
-        $itemsURL = config('api-store.url');
-        $itemsURL['path'] = '/entity/product';
-        $itemsURL['parameters'] = '?limit=100&expand=productFolder.productFolder';
+        if (count(Product::all()) === 0) {
 
+            $itemsURL = config('api-store.url');
+            $itemsURL['path'] = '/entity/product';
+            $itemsURL['parameters'] = '?limit=100&expand=productFolder,uom';
 
-        do {
-            $products = $this->buildEndPoint($itemsURL);
-            $itemsURL = key_exists('nextHref', $products['meta']) ? $products['meta']['nextHref'] : false;
-            dump($products['meta']['offset']);
-        } while ($itemsURL);
+            do {
+                $products = $this->buildEndPoint($itemsURL);
+                $data = collect($products['rows']);
 
-        $data = $products['rows'];
-        dd($products['rows']);
-//        foreach ($data as $key => $item) {
-//
-//            $category = ResourceCategory::make($item)->resolve();
-//            //dump($category);
-//            Category::insert($category);
-//
-//        }
+                foreach ($data as $key => $item) {
 
-//        $collection = Category::all();
-//        $multiplied = $collection->map(function ($item, $key) use ($collection) {
-//            if ($item->productFolder) {
-//                /** @var Category $item */
-//                $category_id = $collection->where('store_id', $item->productFolder)->first()->id;
-//                $item->update(['category_id' => $category_id]);
-//            }
-//        });
+                    $product = ResourceProduct::make($item)->resolve();
 
+                    if ($product['product_folder']) {
+                        $category_id = Category::where('store_id', $product['product_folder'])->first()->id;
+                    } else {
+                        $category_id = $product['category_id'];
+                    }
+
+                    $product['category_id'] = $category_id;
+                    //dd($product);
+                    Product::insert($product);
+
+                }
+                $itemsURL = key_exists('nextHref', $products['meta']) ? $products['meta']['nextHref'] : false;
+                dump($products['meta']['offset']);
+
+            } while ($itemsURL);
+        }
+        //Storage::download($path);
         return 'ok';
     }
 }

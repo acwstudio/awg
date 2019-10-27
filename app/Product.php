@@ -22,4 +22,12 @@ class Product extends Model
         return $this->hasMany('App\ProductImage', 'product_image_id');
 
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
 }

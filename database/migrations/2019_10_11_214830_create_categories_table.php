@@ -21,7 +21,7 @@ class CreateCategoriesTable extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->string('type');
             $table->uuid('store_id');
-            $table->uuid('productFolder')->nullable();
+            $table->uuid('product_folder')->nullable();
             $table->boolean('shared');
             $table->string('version', 10);
             $table->dateTime('updated');

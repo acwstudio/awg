@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Services\Shop\ServiceShopProducts;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -14,14 +15,17 @@ use Illuminate\Http\Request;
  */
 class ShopController extends Controller
 {
+    protected $srvProducts;
+
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param ServiceShopProducts $shopProducts
      */
-    public function __construct()
+    public function __construct(ServiceShopProducts $shopProducts)
     {
         //$this->middleware('auth');
+        $this->srvProducts = $shopProducts;
     }
 
     /**
@@ -31,21 +35,8 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $user = Auth::guard('customer')->user();
-//        dd(Category::with('children')->get());
-        $categories = Category::all();
-        $topLevelCategories = Category::where('category_id', '=', null)->with('children')->get();
+        $result = $this->srvProducts->srvShopIndex();
 
-//        foreach ($categories as $category) {
-//            if ($category->children->count() > 0) {
-//                dump($category->children->count());
-//            } else {
-//                dump($category->name);
-//            }
-//            dump($category->parent);
-//        }
-        //dd($topLevelCategories);
-
-        return view('shop.home', compact('user', 'categories', 'topLevelCategories'));
+        return view('shop.home', $result);
     }
 }

@@ -28,13 +28,12 @@ class ResourceCategory extends JsonResource
             'version' => $this->resource['version'],
             'updated' => $this->resource['updated'],
             'name' => $this->resource['name'],
-            'description' => $this->resource['description'],
+            'description' => key_exists('description', $this->resource) ? $this->resource['description'] : '',
             'code' => key_exists('code', $this->resource) ? $this->resource['code'] : '',
             'ext_code' => $this->resource['externalCode'],
             'archived' => $this->resource['archived'],
             'path_name' => $this->resource['pathName'],
-            'productFolder' => $this->resource['pathName'] ? $this->resource['productFolder']['id'] : '',
-            //'productFolder' => $this->resource['productFolder'],
+            'product_folder' => key_exists('productFolder', $this->resource) ? $this->resource['productFolder']['id'] : '',
 
         ];
     }

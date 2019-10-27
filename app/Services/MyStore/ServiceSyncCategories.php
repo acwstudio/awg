@@ -35,16 +35,17 @@ class ServiceSyncCategories extends ServiceMyStoreBase
         foreach ($data as $key => $item) {
 
             $category = ResourceCategory::make($item)->resolve();
-            //dump($category);
-            Category::insert($category);
 
+            if (!Category::all()->contains('store_id', $item['id'])) {
+                Category::insert($category);
+            }
         }
 
         $collection = Category::all();
         $multiplied = $collection->map(function ($item, $key) use ($collection) {
-            if ($item->productFolder) {
+            if ($item->product_folder) {
                 /** @var Category $item */
-                $category_id = $collection->where('store_id', $item->productFolder)->first()->id;
+                $category_id = $collection->where('store_id', $item->product_folder)->first()->id;
                 $item->update(['category_id' => $category_id]);
             }
         });
