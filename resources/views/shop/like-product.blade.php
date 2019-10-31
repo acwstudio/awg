@@ -11,7 +11,8 @@
                         <!-- Product Image Start -->
                         <div class="pro-img">
                             <a href="product.html">
-                                <img class="primary-img" src="{{ asset('shop/img/products/17.jpg') }}"
+                                <img class="primary-img"
+                                     src="{{ asset("storage/" . $product->img_full_name) }}"
                                      alt="single-product">
                                 <img class="secondary-img" src="{{ asset('shop/img/products/18.jpg') }}"
                                      alt="single-product">

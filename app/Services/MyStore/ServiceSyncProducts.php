@@ -5,6 +5,7 @@ namespace App\Services\MyStore;
 use App\Category;
 use App\Http\Resources\ResourceProduct;
 use App\Product;
+use Illuminate\Support\Facades\Redis;
 use Storage;
 
 /**
@@ -31,8 +32,10 @@ class ServiceSyncProducts extends ServiceMyStoreBase
             $itemsURL['path'] = '/entity/product';
             $itemsURL['parameters'] = '?limit=100&expand=productFolder,uom';
 
+            Redis::set('offset', 0);
+
             do {
-                $products = $this->buildEndPoint($itemsURL);
+                $products = json_decode($this->buildEndPoint($itemsURL), true);
                 $data = collect($products['rows']);
 
                 foreach ($data as $key => $item) {
@@ -46,16 +49,26 @@ class ServiceSyncProducts extends ServiceMyStoreBase
                     }
 
                     $product['category_id'] = $category_id;
-                    //dd($product);
+
                     Product::insert($product);
 
                 }
                 $itemsURL = key_exists('nextHref', $products['meta']) ? $products['meta']['nextHref'] : false;
-                dump($products['meta']['offset']);
+                //dump($products['meta']['offset']);
+                $size = $products['meta']['size'];
+                Redis::set('offset', $products['meta']['offset']);
+                Redis::set('size', $size);
 
             } while ($itemsURL);
+
+            Redis::set('offset', $size);
+
+            $result = 'каталог загружен';
+
+        } else {
+            $result = 'каталог загружен';
         }
-        //Storage::download($path);
-        return 'ok';
+
+        return $result;
     }
 }

@@ -28,7 +28,7 @@ class ServiceSyncCategories extends ServiceMyStoreBase
         $itemsURL['path'] = '/entity/productfolder';
         $itemsURL['parameters'] = '?expand=productFolder&limit=100';
 
-        $folders = $this->buildEndPoint($itemsURL);
+        $folders = json_decode($this->buildEndPoint($itemsURL), true);
 
         $data = $folders['rows'];
 

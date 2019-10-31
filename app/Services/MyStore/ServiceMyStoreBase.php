@@ -5,6 +5,9 @@ namespace App\Services\MyStore;
 
 use App\Http\Resources\ResourceProduct;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Redis;
+use Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Class ServiceMyStoreBase
@@ -30,8 +33,9 @@ class ServiceMyStoreBase
     protected function buildEndPoint($itemsURL)
     {
         $url = null;
+
         if(is_array($itemsURL)) {
-            dump('array');
+            //dump('array');
             foreach ($itemsURL as $item) {
                 $url = $url . $item;
             }
@@ -39,13 +43,14 @@ class ServiceMyStoreBase
             $url = $itemsURL;
         }
 
-        $jsonData = json_decode($this->client->request(
+        $jsonData = $this->client->request(
             'get', $url,
             ['headers' => [
                 'Authorization'=>$this->token,
             ]]
-        )->getBody()->getContents(), true);
+        )->getBody()->getContents();
 
         return $jsonData;
     }
+
 }

@@ -28,9 +28,15 @@ class ImageController extends Controller
     /**
      * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     public function syncProductsImage()
     {
         return $this->images->srvGetImages();
     }
+
+//    public function stream($message)
+//    {
+//        $this->images->getEventStream($message);
+//    }
 }

@@ -29,7 +29,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('img_name')->nullable();
             $table->string('img_extension')->nullable();
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->string('code');
             $table->string('ext_code');
             $table->boolean('archived');
@@ -38,6 +38,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 10, 2);
             $table->string('article');
             $table->string('store_image');
+            $table->timestamps();
         });
     }
 

@@ -32,6 +32,7 @@ class ProductController extends Controller
      */
     public function syncProductsCatalog()
     {
+        //$this->products->getEventStream();
         return $this->products->srvGetProducts();
     }
 }

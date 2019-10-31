@@ -33,7 +33,8 @@ class ResourceCategory extends JsonResource
             'ext_code' => $this->resource['externalCode'],
             'archived' => $this->resource['archived'],
             'path_name' => $this->resource['pathName'],
-            'product_folder' => key_exists('productFolder', $this->resource) ? $this->resource['productFolder']['id'] : '',
+            'product_folder' => key_exists('productFolder', $this->resource) ?
+                $this->resource['productFolder']['id'] : '',
 
         ];
     }

@@ -59,6 +59,7 @@ Route::namespace('Admin')->group(function () {
         });
 
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('/stream', 'StreamController@getEventStream')->name('stream');
     });
 });
 

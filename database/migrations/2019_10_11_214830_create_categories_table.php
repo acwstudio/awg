@@ -26,8 +26,8 @@ class CreateCategoriesTable extends Migration
             $table->string('version', 10);
             $table->dateTime('updated');
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('code')->nullable();
+            $table->text('description');
+            $table->string('code');
             $table->string('ext_code');
             $table->boolean('archived');
             $table->string('path_name');
