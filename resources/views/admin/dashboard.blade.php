@@ -17,6 +17,28 @@
             <!-- Icon Cards-->
             <div class="row">
                 <div class="col-xl-3 col-sm-6 mb-3">
+                    <div id="amt-category-items" class="card o-hidden h-100">
+                        <div class="card-header text-white bg-dark">
+                            <div class="mr-5">
+                                <span><i class="fas fa-fw fa-list"></i></span><span> Кол-во категорий</span>
+                            </div>
+                        </div>
+                        <div class="card-body bg-light">
+                            <div class="text-center mr-5"><h1>{{ $amtCategories }}</h1></div>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-outline-info text-outline-info clearfix"
+                               href="{{ route('mystore.sync.category') }}">
+                                <span class="float-left">Загрузить категории <i class="fas fa-download"></i></span>
+                            </a>
+                            <div class="mt-2 progress">
+                                <div class="progress-bar" style="width:0%"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
                     <div id="amt-catalog-items" class="card o-hidden h-100">
                         <div class="card-header text-white bg-dark">
                             <div class="mr-5">
@@ -38,7 +60,28 @@
 
                     </div>
                 </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div id="amt-image-items" class="card o-hidden h-100">
+                        <div class="card-header text-white bg-dark">
+                            <div class="mr-5">
+                                <span><i class="fas fa-fw fa-list"></i></span><span> Кол-во изображений</span>
+                            </div>
+                        </div>
+                        <div class="card-body bg-light">
+                            <div class="text-center mr-5"><h1>{{ $amtImages }}</h1></div>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-outline-info text-outline-info clearfix"
+                               href="{{ route('mystore.sync.product') }}">
+                                <span class="float-left">Загрузить изображения <i class="fas fa-download"></i></span>
+                            </a>
+                            <div class="mt-2 progress">
+                                <div class="progress-bar" style="width:0%"></div>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
             </div>
 
         </div>
