@@ -28,8 +28,9 @@ class ServiceSyncImages extends ServiceMyStoreBase
     {
         $itemsURL = config('api-store.url');
 
-        $productsHasImage = Product::where('store_image', '!=', '')->get();
-
+//        $productsHasImage = Product::where('store_image', '!=', '')->get();
+        $productsHasImage = Product::where('store_image', '!=', '')->whereNull('img_name')->get();
+        //dd($productsHasImage->count());
         foreach ($productsHasImage as $key => $item) {
 
             $itemsURL['path'] = '/download/' . $item->store_image;

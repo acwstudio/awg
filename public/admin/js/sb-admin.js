@@ -77,7 +77,7 @@
     // Category download
     categoryClick.on('click', function (e) {
         e.preventDefault();
-        let evtSource = new EventSource("/admin/stream", {withCredentials: true});
+        let evtSource = new EventSource("/admin/stream/category", {withCredentials: true});
         let size = 0;
         evtSource.onmessage = function (e) {
             let data = JSON.parse(e.data);

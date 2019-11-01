@@ -73,6 +73,6 @@ class ServiceSyncCategories extends ServiceMyStoreBase
         }
 
         return $result;
-        
+
     }
 }

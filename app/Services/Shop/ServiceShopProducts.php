@@ -32,7 +32,7 @@ class ServiceShopProducts
         $categories = Category::all();
         $user = Auth::guard('customer')->user();
         $topLevelCategories = Category::where('category_id', '=', null)->with('children')->get();
-        $products = Product::take(250)->get()->random(15);
+        $products = Product::take(600)->get()->random(15);
         foreach ($products as $item) {
             $item->img_full_name = $item->img_name ? $item->img_name . $item->img_extension : 'product_empty.png';
         }
