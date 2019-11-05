@@ -3,6 +3,9 @@
 namespace App\Services\MyStore;
 
 use App\Product;
+use App\ProductImage;
+use GuzzleHttp\Client;
+use Redis;
 use Spatie\Image\Image;
 use Spatie\Image\Manipulations;
 use Storage;
@@ -12,11 +15,15 @@ use Storage;
  *
  * @package App\Services\MyStore
  */
-class ServiceSyncImages extends ServiceMyStoreBase
+class ServiceSyncImages
 {
-    public function __construct()
+    protected $client;
+    protected $redis;
+
+    public function __construct(Client $client, Redis $redis)
     {
-        parent::__construct();
+        $this->redis = $redis;
+        $this->client = $client;
     }
 
     /**
@@ -26,9 +33,9 @@ class ServiceSyncImages extends ServiceMyStoreBase
      */
     public function srvGetImages()
     {
-        $itemsURL = config('api-store.url');
+        dd(Product::find(43)->product_images);
+        $itemsURL = config('api-store.guzzlehttp.base_uri');
 
-//        $productsHasImage = Product::where('store_image', '!=', '')->get();
         $productsHasImage = Product::where('store_image', '!=', '')->whereNull('img_name')->get();
         //dd($productsHasImage->count());
         foreach ($productsHasImage as $key => $item) {

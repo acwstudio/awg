@@ -5,19 +5,23 @@ namespace App\Services\MyStore;
 use App\Category;
 use App\Http\Resources\ResourceProduct;
 use App\Product;
-use Illuminate\Support\Facades\Redis;
-use Storage;
+use GuzzleHttp\Client;
+use Redis;
 
 /**
  * Class ServiceSyncProducts
  *
  * @package App\Services\MyStore
  */
-class ServiceSyncProducts extends ServiceMyStoreBase
+class ServiceSyncProducts
 {
-    public function __construct()
+    protected $client;
+    protected $redis;
+
+    public function __construct(Client $client, Redis $redis)
     {
-        parent::__construct();
+        $this->redis = $redis;
+        $this->client = $client;
     }
 
     /**
@@ -26,19 +30,20 @@ class ServiceSyncProducts extends ServiceMyStoreBase
      */
     public function srvGetProducts()
     {
-        if (count(Product::all()) === 0) {
+        $products = Product::all();
+        $this->redis->set('api:products:size', $products->count());
 
-            $itemsURL = config('api-store.url');
-            $itemsURL['path'] = '/entity/product';
-            $itemsURL['parameters'] = '?limit=100&expand=productFolder,uom';
+        if ($products->count() === 0) {
 
-            Redis::set('offset', 0);
+            $itemsURL = config('api-store.guzzlehttp.base_uri')
+                . '/entity/product' . '?limit=100&expand=productFolder,uom';
+
+            $this->redis->set('api:products:offset', 0);
 
             do {
-                $products = json_decode($this->buildEndPoint($itemsURL), true);
-                $data = collect($products['rows']);
+                $products = json_decode($this->client->get($itemsURL)->getBody()->getContents());
 
-                foreach ($data as $key => $item) {
+                foreach ($products->rows as $key => $item) {
 
                     $product = ResourceProduct::make($item)->resolve();
 
@@ -53,20 +58,21 @@ class ServiceSyncProducts extends ServiceMyStoreBase
                     Product::insert($product);
 
                 }
-                $itemsURL = key_exists('nextHref', $products['meta']) ? $products['meta']['nextHref'] : false;
-                //dump($products['meta']['offset']);
-                $size = $products['meta']['size'];
-                Redis::set('offset', $products['meta']['offset']);
-                Redis::set('size', $size);
+                $itemsURL = isset($products->meta->nextHref) ? $products->meta->nextHref : false;
+               // dump($itemsURL);
+                $size = $products->meta->size;
+                $this->redis->set('api:products:offset', $products->meta->offset);
+                $this->redis->set('api:products:size', $size);
 
             } while ($itemsURL);
 
-            Redis::set('offset', $size);
+            $this->redis->set('api:products:offset', Product::all()->count());
 
-            $result = 'каталог загружен';
+            $result = ['message' => 'каталог загружен', 'offset' => Product::all()->count()];
 
         } else {
-            $result = 'каталог загружен';
+
+            $result = ['message' => 'каталог загружен', 'offset' => Product::all()->count()];
         }
 
         return $result;

@@ -48,15 +48,16 @@
 
     // Catalog download
     catalogClick.on('click', function (e) {
+
         e.preventDefault();
-        let evtSource = new EventSource("/admin/stream", {withCredentials: true});
-        let size = 0;
+
+        let evtSource = new EventSource("/admin/stream/product", {withCredentials: true});
+
         evtSource.onmessage = function (e) {
             let data = JSON.parse(e.data);
-            console.log(data);
-            $('#amt-catalog-items .progress').html('<div class="progress-bar" style="width:' + data.message + '%"></div>');
-            $('#amt-catalog-items h1').html(data.offset);
-            size = data.size;
+            console.log(urlCatalog);
+            $('#amt-catalog-items .progress').html('<div class="progress-bar" style="width:' + data.product.message + '%"></div>');
+            $('#amt-catalog-items h1').html(data.product.offset);
         };
 
         $.ajax({
@@ -68,7 +69,7 @@
 
             console.log(result);
             $('#amt-catalog-items .progress').html('<div class="progress-bar" style="width:100%"></div>');
-            $('#amt-catalog-items h1').html(size);
+            $('#amt-catalog-items h1').html(result.offset);
             evtSource.close();
 
         });
@@ -78,13 +79,11 @@
     categoryClick.on('click', function (e) {
         e.preventDefault();
         let evtSource = new EventSource("/admin/stream/category", {withCredentials: true});
-        let size = 0;
         evtSource.onmessage = function (e) {
             let data = JSON.parse(e.data);
-            console.log(data);
-            $('#amt-category-items .progress').html('<div class="progress-bar" style="width:' + data.message + '%"></div>');
-            $('#amt-category-items h1').html(data.offset);
-            size = data.size;
+            console.log(urlCategory);
+            $('#amt-category-items .progress').html('<div class="progress-bar" style="width:' + data.category.message + '%"></div>');
+            $('#amt-category-items h1').html(data.category.offset);
         };
 
         $.ajax({
@@ -93,16 +92,15 @@
             type: 'get',
 
         }).done(function (result) {
-
             console.log(result);
             $('#amt-category-items .progress').html('<div class="progress-bar" style="width:100%"></div>');
-            $('#amt-category-items h1').html(size);
+            $('#amt-category-items h1').html(result.offset);
             evtSource.close();
 
         });
     });
 
-    // Category download
+    // Image download
     imageClick.on('click', function (e) {
         e.preventDefault();
     });

@@ -2,73 +2,81 @@
 
 namespace App\Services\Admin;
 
-use Illuminate\Support\Facades\Redis;
+use Redis;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Class ServiceEventStream
  *
- * @package App\Services\Admin
+ * @package App\Services\Admin+
  */
 class ServiceEventStream
 {
-    public function __construct()
-    {
+    protected $redis;
 
+    public function __construct(Redis $redis)
+    {
+        $this->redis = $redis;
     }
 
     public function srvEventStream($entity)
     {
-        Redis::set('offset', 55);
-        $size = Redis::get('size');
-        $offset = Redis::get($entity . '.offset');
-        dd($size);
-        $message = Redis::get('offset') / Redis::get('size') * 100;
+        if ($entity === "category") {
+            $message = $this->redis->get('api:categories:offset') / $this->redis->get('api:categories:size') * 100;
 
-        $data = [
-            $entity => [
-                'message' => (integer)$message,
-                'size' => Redis::get('size'),
-                'offset' => Redis::get('offset'),
-                'entity' => $entity
-            ]
-        ];
+            $data = [
+                $entity => [
+                    'message' => (integer)$message,
+                    'size' => $this->redis->get('api:categories:size'),
+                    'offset' => $this->redis->get('api:categories:offset'),
+                    'entity' => $entity
+                ]
+            ];
+            $response = new StreamedResponse();
 
-        $response = new StreamedResponse();
+            $response->setCallback(function () use ($data){
 
-        $response->setCallback(function () use ($data){
+                echo 'data: ' . json_encode($data) . "\n\n";
 
-            echo 'data: ' . json_encode($data) . "\n\n";
+                ob_flush();
+                flush();
 
-            ob_flush();
-            flush();
+                usleep(20000);
+            });
 
-            usleep(20000);
-        });
+            $response->headers->set('Content-Type', 'text/event-stream');
+            $response->headers->set('X-Accel-Buffering', 'no');
+            $response->headers->set('Cach-Control', 'no-cache');
+            $response->send();
+        }
 
-        $response->headers->set('Content-Type', 'text/event-stream');
-        $response->headers->set('X-Accel-Buffering', 'no');
-        $response->headers->set('Cach-Control', 'no-cache');
-        $response->send();
-    }
+        if ($entity === "product") {
+            $message = $this->redis->get('api:products:offset') / $this->redis->get('api:products:size') * 100;
 
-    public function srvEventStreamCatalog($entity)
-    {
-        return 'ok';
-    }
+            $data = [
+                $entity => [
+                    'message' => (integer)$message,
+                    'size' => $this->redis->get('api:products:size'),
+                    'offset' => $this->redis->get('api:products:offset'),
+                    'entity' => $entity
+                ]
+            ];
+            $response = new StreamedResponse();
 
-    public function srvEventStreamCategory($entity)
-    {
-        return 'ok';
-    }
+            $response->setCallback(function () use ($data){
 
-    public function srvEventStreamImage($entity)
-    {
-        return 'ok';
-    }
+                echo 'data: ' . json_encode($data) . "\n\n";
 
-    private function sendResponse()
-    {
+                ob_flush();
+                flush();
 
+                usleep(20000);
+            });
+
+            $response->headers->set('Content-Type', 'text/event-stream');
+            $response->headers->set('X-Accel-Buffering', 'no');
+            $response->headers->set('Cach-Control', 'no-cache');
+            $response->send();
+        }
     }
 }
