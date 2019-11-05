@@ -30,9 +30,12 @@ class ServiceShopProducts
     public function srvShopIndex()
     {
         $categories = Category::all();
+
         $user = Auth::guard('customer')->user();
         $topLevelCategories = Category::where('category_id', '=', null)->with('children')->get();
-        $products = Product::take(600)->get()->random(15);
+        $productsTotal = Product::all();
+        $products = $productsTotal->random(15);
+        
         foreach ($products as $item) {
             $item->img_full_name = $item->img_name ? $item->img_name . $item->img_extension : 'product_empty.png';
         }

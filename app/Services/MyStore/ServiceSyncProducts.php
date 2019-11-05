@@ -18,6 +18,12 @@ class ServiceSyncProducts
     protected $client;
     protected $redis;
 
+    /**
+     * ServiceSyncProducts constructor.
+     *
+     * @param Client $client
+     * @param Redis $redis
+     */
     public function __construct(Client $client, Redis $redis)
     {
         $this->redis = $redis;
@@ -31,7 +37,7 @@ class ServiceSyncProducts
     public function srvGetProducts()
     {
         $products = Product::all();
-        $this->redis->set('api:products:size', $products->count());
+        //$this->redis->set('api:products:size', $products->count());
 
         if ($products->count() === 0) {
 

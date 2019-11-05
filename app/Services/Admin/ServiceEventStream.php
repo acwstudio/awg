@@ -14,69 +14,82 @@ class ServiceEventStream
 {
     protected $redis;
 
+    /**
+     * ServiceEventStream constructor.
+     *
+     * @param Redis $redis
+     */
     public function __construct(Redis $redis)
     {
         $this->redis = $redis;
     }
 
+    /**
+     * @param $entity
+     */
     public function srvEventStream($entity)
     {
         if ($entity === "category") {
-            $message = $this->redis->get('api:categories:offset') / $this->redis->get('api:categories:size') * 100;
 
-            $data = [
-                $entity => [
-                    'message' => (integer)$message,
-                    'size' => $this->redis->get('api:categories:size'),
-                    'offset' => $this->redis->get('api:categories:offset'),
-                    'entity' => $entity
-                ]
+            $params = [
+                'entity' => $entity,
+                'redis_key_offset' => 'api:categories:offset',
+                'redis_key_size' => 'api:categories:size',
+                'message' => '',
             ];
-            $response = new StreamedResponse();
 
-            $response->setCallback(function () use ($data){
+            $this->streamResponse($params);
 
-                echo 'data: ' . json_encode($data) . "\n\n";
-
-                ob_flush();
-                flush();
-
-                usleep(20000);
-            });
-
-            $response->headers->set('Content-Type', 'text/event-stream');
-            $response->headers->set('X-Accel-Buffering', 'no');
-            $response->headers->set('Cach-Control', 'no-cache');
-            $response->send();
         }
 
         if ($entity === "product") {
-            $message = $this->redis->get('api:products:offset') / $this->redis->get('api:products:size') * 100;
-
-            $data = [
-                $entity => [
-                    'message' => (integer)$message,
-                    'size' => $this->redis->get('api:products:size'),
-                    'offset' => $this->redis->get('api:products:offset'),
-                    'entity' => $entity
-                ]
+            $params = [
+                'entity' => $entity,
+                'redis_key_offset' => 'api:products:offset',
+                'redis_key_size' => 'api:products:size',
+                'message' => '',
             ];
-            $response = new StreamedResponse();
 
-            $response->setCallback(function () use ($data){
-
-                echo 'data: ' . json_encode($data) . "\n\n";
-
-                ob_flush();
-                flush();
-
-                usleep(20000);
-            });
-
-            $response->headers->set('Content-Type', 'text/event-stream');
-            $response->headers->set('X-Accel-Buffering', 'no');
-            $response->headers->set('Cach-Control', 'no-cache');
-            $response->send();
+            $this->streamResponse($params);
         }
+    }
+
+    /**
+     * @param array $params
+     */
+    private function streamResponse(array $params)
+    {
+        if ($params['redis_key_offset']) {
+            $message = $this->redis
+                    ->get($params['redis_key_offset']) / $this->redis->get($params['redis_key_size']) * 100;
+        } else {
+            $message = 0;
+        }
+
+        $data = [
+            $params['entity'] => [
+                'message' => (integer)$message,
+                'size' => $this->redis->get($params['redis_key_size']),
+                'offset' => $this->redis->get($params['redis_key_offset']),
+                'entity' => $params['entity']
+            ]
+        ];
+
+        $response = new StreamedResponse();
+
+        $response->setCallback(function () use ($data){
+
+            echo 'data: ' . json_encode($data) . "\n\n";
+
+            ob_flush();
+            flush();
+
+            usleep(20000);
+        });
+
+        $response->headers->set('Content-Type', 'text/event-stream');
+        $response->headers->set('X-Accel-Buffering', 'no');
+        $response->headers->set('Cach-Control', 'no-cache');
+        $response->send();
     }
 }

@@ -17,6 +17,12 @@ class ServiceSyncCategories
     protected $client;
     protected $redis;
 
+    /**
+     * ServiceSyncCategories constructor.
+     *
+     * @param Client $client
+     * @param Redis $redis
+     */
     public function __construct(Client $client, Redis $redis)
     {
         $this->client = $client;
