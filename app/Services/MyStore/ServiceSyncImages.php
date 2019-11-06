@@ -2,6 +2,7 @@
 
 namespace App\Services\MyStore;
 
+use App\Jobs\SyncImages;
 use App\Product;
 use App\ProductImage;
 use GuzzleHttp\Client;
@@ -20,6 +21,12 @@ class ServiceSyncImages
     protected $client;
     protected $redis;
 
+    /**
+     * ServiceSyncImages constructor.
+     *
+     * @param Client $client
+     * @param Redis $redis
+     */
     public function __construct(Client $client, Redis $redis)
     {
         $this->redis = $redis;
@@ -27,40 +34,38 @@ class ServiceSyncImages
     }
 
     /**
-     * @return string
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     * @return array
      */
     public function srvGetImages()
     {
-        dd(Product::find(43)->product_images);
-        $itemsURL = config('api-store.guzzlehttp.base_uri');
+        $images = Product::where('store_image', '!=', '')->get();
+        $this->redis->set('api:images:size', $images->count());
+//        $hasImagestore = Product::where('store_image', '!=', '')->whereNull('img_name')->get();
+        $hasImagestore = Product::where('store_image', '!=', '')->get();
+//        dd($hasImagestore->count());
 
-        $productsHasImage = Product::where('store_image', '!=', '')->whereNull('img_name')->get();
-        //dd($productsHasImage->count());
-        foreach ($productsHasImage as $key => $item) {
+        foreach ($hasImagestore as $key => $item) {
 
-            $itemsURL['path'] = '/download/' . $item->store_image;
-            $itemsURL['parameters'] = '';
+            if (count($item->product_images) === 0) {
 
-            $img_name = 'product-' . $item->id . '-' . $item->code;
+                $itemsURL = $item->store_image;
 
-            Product::find($item->id)->update([
-                'img_name' => $img_name,
-                'img_extension' => '.jpg',
-            ]);
+                $img_name = 'product-' . $item->id . '-' . $item->code;
+                $data = [
+                    'url' => $itemsURL,
+                    'img_name' => $img_name,
+                    'number' => $key
+                ];
+                Product::find($item->id)->update([
+                    'img_name' => $img_name,
+                    'img_extension' => '.jpg',
+                ]);
+                // Queue processing images
+                SyncImages::dispatch($data);
+            }
 
-            $image = $this->buildEndPoint($itemsURL);
-
-            Storage::disk('public')->put($img_name . '.jpg', $image);
-
-            $img = Image::load(storage_path('app/public/' . $img_name . '.jpg'));
-            $img->fit(Manipulations::FIT_FILL, 400, 400)
-                ->background('bebcc1')->save();
-//            dd($img->getWidth());
-            //dump($key);
         }
 
-        return 'ok';
+        return ['message' => 'изображения загружены', 'offset' => $this->redis->get('api:images:offset')];
     }
 }

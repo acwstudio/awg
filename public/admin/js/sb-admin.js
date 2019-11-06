@@ -48,7 +48,7 @@
 
     // Catalog download
     catalogClick.on('click', function (e) {
-
+        catalogClick.css("pointer-events", "none");
         e.preventDefault();
 
         let evtSource = new EventSource("/admin/stream/product", {withCredentials: true});
@@ -68,6 +68,7 @@
         }).done(function (result) {
 
             console.log(result);
+            catalogClick.css("pointer-events", "auto");
             $('#amt-catalog-items .progress').html('<div class="progress-bar" style="width:100%"></div>');
             $('#amt-catalog-items h1').html(result.offset);
             evtSource.close();
@@ -78,6 +79,7 @@
     // Category download
     categoryClick.on('click', function (e) {
         e.preventDefault();
+        categoryClick.css("pointer-events", "none");
         let evtSource = new EventSource("/admin/stream/category", {withCredentials: true});
         evtSource.onmessage = function (e) {
             let data = JSON.parse(e.data);
@@ -93,6 +95,7 @@
 
         }).done(function (result) {
             console.log(result);
+            categoryClick.css("pointer-events", "auto");
             $('#amt-category-items .progress').html('<div class="progress-bar" style="width:100%"></div>');
             $('#amt-category-items h1').html(result.offset);
             evtSource.close();
@@ -103,6 +106,28 @@
     // Image download
     imageClick.on('click', function (e) {
         e.preventDefault();
+        imageClick.css("pointer-events", "none");
+        let evtSource = new EventSource("/admin/stream/image", {withCredentials: true});
+        evtSource.onmessage = function (e) {
+            let data = JSON.parse(e.data);
+            console.log(urlImage);
+            $('#amt-image-items .progress').html('<div class="progress-bar" style="width:' + data.image.message + '%"></div>');
+            $('#amt-image-items h1').html(data.image.offset);
+        };
+
+        $.ajax({
+
+            url: urlImage,
+            type: 'get',
+
+        }).done(function (result) {
+            console.log(result);
+            imageClick.css("pointer-events", "auto");
+            $('#amt-image-items .progress').html('<div class="progress-bar" style="width:100%"></div>');
+            $('#amt-image-items h1').html(result.offset);
+            evtSource.close();
+
+        });
     });
 
 })(jQuery); // End of use strict

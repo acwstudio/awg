@@ -76,7 +76,7 @@
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-outline-info text-outline-info clearfix"
-                               href="{{ route('mystore.sync.product') }}">
+                               href="{{ route('mystore.sync.image') }}">
                                 <span class="float-left">Загрузить изображения <i class="fas fa-download"></i></span>
                             </a>
                             <div class="mt-2 progress">

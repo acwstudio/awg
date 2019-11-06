@@ -107,5 +107,6 @@ Route::namespace('Customer')->group(function () {
 });
 
 Route::get('/', 'ShopController@index')->name('shop');
+Route::get('/{id}', 'ShopController@show')->name('product');
 
 Route::get('/home', 'HomeController@index')->name('home');

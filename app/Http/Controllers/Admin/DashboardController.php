@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
 use App\Http\Controllers\Controller;
-use App\Product;
+use App\Services\Admin\ServiceAdminDashboard;
 use Illuminate\Http\Request;
 
 /**
@@ -14,17 +13,17 @@ use Illuminate\Http\Request;
  */
 class DashboardController extends Controller
 {
-    protected $redis;
+    protected $dashboard;
 
     /**
      * DashboardController constructor.
      *
      * @param \Redis $redis
      */
-    public function __construct(\Redis $redis)
+    public function __construct(ServiceAdminDashboard $adminDashboard)
     {
         $this->middleware('auth:admin');
-        $this->redis = $redis;
+        $this->dashboard = $adminDashboard;
     }
 
     /**
@@ -32,13 +31,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $amtPositions = Product::all()->count();
-        $this->redis->set('api:products:offset', $amtPositions);
-        $amtCategories = Category::all()->count();
-        $this->redis->set('api:categories:offset', $amtCategories);
-        $amtImages = Product::where('img_name', '!=', null)->count();
+        $data = $this->dashboard->srvIndex();
 
-        return view('admin.dashboard', compact('amtPositions', 'amtCategories', 'amtImages'));
+        return view('admin.dashboard', $data);
     }
 
 }

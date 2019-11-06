@@ -52,6 +52,17 @@ class ServiceEventStream
 
             $this->streamResponse($params);
         }
+
+        if ($entity === "image") {
+            $params = [
+                'entity' => $entity,
+                'redis_key_offset' => 'api:images:offset',
+                'redis_key_size' => 'api:images:size',
+                'message' => '',
+            ];
+
+            $this->streamResponse($params);
+        }
     }
 
     /**

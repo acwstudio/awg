@@ -39,4 +39,15 @@ class ShopController extends Controller
 
         return view('shop.home', $result);
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $result = $this->srvProducts->srvShopShow($id);
+
+        return view('shop.product', $result);
+    }
 }

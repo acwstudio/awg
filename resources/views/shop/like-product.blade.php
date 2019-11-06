@@ -2,7 +2,7 @@
 <div class="like-product ptb-95 ptb-sm-55 off-white-bg">
     <div class="container">
         <div class="like-product-area">
-            <h2 class="section-ttitle2 mb-30">2018 Trending Products </h2>
+            <h2 class="section-ttitle2 mb-30">2019 Trending Products </h2>
             <!-- Like Product Activation Start Here -->
             <div class="like-pro-active owl-carousel">
             @foreach($products as $product)
@@ -10,11 +10,11 @@
                     <div class="single-product">
                         <!-- Product Image Start -->
                         <div class="pro-img">
-                            <a href="product.html">
+                            <a href="{{ route('product', $product->id) }}">
                                 <img class="primary-img"
                                      src="{{ asset("storage/" . $product->img_full_name) }}"
                                      alt="single-product">
-                                <img class="secondary-img" src="{{ asset('shop/img/products/18.jpg') }}"
+                                <img class="secondary-img" src="{{ asset("storage/" . $product->img_full_name) }}"
                                      alt="single-product">
                             </a>
                             <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
