@@ -1,7 +1,7 @@
 <ul class="ht-dropdown mega-child">
     @foreach($children as $child)
 
-        <li class=""><a href="shop.html">
+        <li class=""><a href="{{ route('shop.catalog', $child->id) }}">
                 {{--<span><img src="{{ asset('shop/img/vertical-menu/1.png') }}" alt="menu-icon"></span>--}}
                 {{ $child->name }}
                 @if(count($child->children))
@@ -10,7 +10,7 @@
             </a>
 
             @if(count($child->children))
-                @include('manage-child',['children' => $child->children])
+                @include('shop.manage-child',['children' => $child->children])
             @endif
         </li>
     @endforeach

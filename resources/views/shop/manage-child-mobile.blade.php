@@ -9,7 +9,7 @@
             </a>
 
             @if(count($child->children))
-                @include('manage-child',['children' => $child->children])
+                @include('shop.manage-child-mobile',['children' => $child->children])
             @endif
         </li>
     @endforeach

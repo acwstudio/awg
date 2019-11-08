@@ -7,7 +7,7 @@
                     <ul class="vertical-menu-list">
                         @foreach($topLevelCategories as $category)
                             <li class="">
-                                <a href="shop.html">
+                                <a href="{{ route('shop.catalog', $category->id) }}">
                                         {{--<span><img src="{{ asset('shop/img/vertical-menu/1.png') }}" alt="menu-icon"></span>--}}
                                     {{ $category->name }}
                                     @if($category->children->count() > 0)
@@ -15,7 +15,7 @@
                                     @endif
                                 </a>
                                 @if($category->children->count() > 0)
-                                    @include('manage-child',['children' => $category->children])
+                                    @include('shop.manage-child',['children' => $category->children])
                                 @endif
                             </li>
                         @endforeach

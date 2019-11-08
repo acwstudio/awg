@@ -113,8 +113,8 @@ Route::namespace('Shop')->group(function () {
 
         Route::name('shop.')->group(function () {
 
-            Route::get('/home', 'HomeController@index')->name('home');
             Route::get('/product/{id}', 'HomeController@show')->name('product');
+            Route::get('/catalog/{category_id?}', 'CatalogController@index')->name('catalog');
 
         });
 
@@ -122,4 +122,4 @@ Route::namespace('Shop')->group(function () {
 
 });
 
-//Route::get('/product/{id}', 'ShopController@show')->name('product');
+Route::get('/', 'Shop\HomeController@index')->name('shop.home');

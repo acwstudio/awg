@@ -48,7 +48,7 @@
 
     @include('shop.home.blog-area')
 
-    @include('shop.home.support')
+    @include('shop.support')
 
     @include('shop.footer')
 

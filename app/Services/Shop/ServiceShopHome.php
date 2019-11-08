@@ -31,7 +31,7 @@ class ServiceShopHome
      */
     public function srvShopIndex()
     {
-        $categories = Category::all();
+        $categories = Category::with('products')->get();
 
         $user = Auth::guard('customer')->user();
 
@@ -50,12 +50,13 @@ class ServiceShopHome
             $item->percent = 10;
         }
 
-        $mostViewed = $productsTotal->random(4);
+        $mostViewed = $productsTotal->random(12);
         foreach ($mostViewed as $item) {
             $item->discount_price = $this->discount($item->price, 0.2);
             $item->percent = 20;
             $item->sub_name = $item->name ? Str::limit($item->name, 20) : Str::limit('товар без названия', 0, 20);
         }
+        $mostViewedChunk = $mostViewed->chunk(4);
 
         $productSpecOffer = $productsTotal->random(1);
         foreach ($productSpecOffer as $item) {
@@ -65,25 +66,26 @@ class ServiceShopHome
         }
 
         $newProducts = $productsTotal->random(12);
-
         foreach ($newProducts as $item) {
-            $item->discount_price = $this->discount($item->price, 0.3);
-            $item->percent = 30;
+            $item->discount_price = $this->discount($item->price, 0.1);
+            $item->percent = 10;
             $item->sub_name = $item->name ? Str::limit($item->name, 20) : Str::limit('товар без названия', 0, 20);
         }
+        $newProductsChunk = $newProducts->chunk(2);
 
-        $newProducts->each(function ($item, $key) {
-            //
-        });
-
-//        for ($i=0; $i < $newProducts->count(); $i++) {
-//            $newCollection =
+//        $tabs = $categories;
+//        foreach($tabs as $tab){
+//            if ($tab->products->count() < 10){
+//                //dump($tab);
+//                $tabs->pull($tab->id);
+//            }
 //        }
-
+//
+//        dd($tabs->random(6));
 
         return compact(
             'user', 'categories', 'topLevelCategories', 'productsTrend', 'productsHot', 'productSpecOffer',
-            'mostViewed', 'newProducts'
+            'mostViewedChunk', 'newProductsChunk'
             );
     }
 
