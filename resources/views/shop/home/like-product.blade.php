@@ -5,12 +5,12 @@
             <h2 class="section-ttitle2 mb-30">2019 Trending Products </h2>
             <!-- Like Product Activation Start Here -->
             <div class="like-pro-active owl-carousel">
-            @foreach($products as $product)
+            @foreach($productsTrend as $product)
                 <!-- Single Product Start -->
                     <div class="single-product">
                         <!-- Product Image Start -->
                         <div class="pro-img">
-                            <a href="{{ route('product', $product->id) }}">
+                            <a href="{{ route('shop.product', $product->id) }}">
                                 <img class="primary-img"
                                      src="{{ asset("storage/" . $product->img_full_name) }}"
                                      alt="single-product">

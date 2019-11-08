@@ -36,7 +36,20 @@
             <!-- Slider Area End Here -->
     </div>
 
-    @include('shop.like-product')
+    @include('shop.home.like-product')
+
+    @include('shop.home.big-banner')
+
+    @include('shop.home.product-sidebar')
+
+    @include('shop.home.banner-area')
+
+    @include('shop.home.best-seller')
+
+    @include('shop.home.blog-area')
+
+    @include('shop.home.support')
 
     @include('shop.footer')
+
 @endsection

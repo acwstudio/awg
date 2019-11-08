@@ -79,7 +79,7 @@
             <div class="text-center">
                 <a class="d-block small mt-3" href="{{ route('admin.register') }}">Register an Account</a>
                 <a class="d-block small" href="{{ route('admin.login') }}">Login Page</a>
-                <a class="d-block small" href="{{ route('shop') }}">Back to site</a>
+                <a class="d-block small" href="{{ route('shop.home') }}">Back to site</a>
             </div>
         </div>
     </div>

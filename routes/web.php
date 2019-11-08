@@ -106,7 +106,20 @@ Route::namespace('Customer')->group(function () {
     });
 });
 
-Route::get('/', 'ShopController@index')->name('shop');
-Route::get('/{id}', 'ShopController@show')->name('product');
+// Shop part
+Route::namespace('Shop')->group(function () {
 
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::prefix('/shop')->group(function () {
+
+        Route::name('shop.')->group(function () {
+
+            Route::get('/home', 'HomeController@index')->name('home');
+            Route::get('/product/{id}', 'HomeController@show')->name('product');
+
+        });
+
+    });
+
+});
+
+//Route::get('/product/{id}', 'ShopController@show')->name('product');

@@ -8,7 +8,7 @@
             <div class="col-xl-9 col-lg-8 col-md-12 ">
                 <nav class="d-none d-lg-block">
                     <ul class="header-bottom-list d-flex">
-                        <li class="active"><a href="{{ route('shop') }}">home</a></li>
+                        <li class="active"><a href="{{ route('shop.home') }}">home</a></li>
                         <li><a href="shop.html">shop<i class="fa fa-angle-down"></i></a>
                             <!-- Home Version Dropdown Start -->
                             <ul class="ht-dropdown dropdown-style-two">
@@ -45,7 +45,7 @@
                 <div class="mobile-menu d-block d-lg-none">
                     <nav>
                         <ul>
-                            <li><a href="{{ route('shop') }}">home</a></li>
+                            <li><a href="{{ route('shop.home') }}">home</a></li>
                             <li><a href="shop.html">shop</a>
                                 <!-- Mobile Menu Dropdown Start -->
                                 <ul>
