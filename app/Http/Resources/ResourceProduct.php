@@ -39,6 +39,5 @@ class ResourceProduct extends JsonResource
             'article' => isset($this->resource->article) ? $this->resource->article : '',
             'store_image' => isset($this->resource->image) ? $this->resource->image->meta->href : '',
         ];
-
     }
 }

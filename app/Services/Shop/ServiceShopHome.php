@@ -6,6 +6,7 @@ namespace App\Services\Shop;
 use App\Category;
 use App\Product;
 use Auth;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
@@ -72,16 +73,6 @@ class ServiceShopHome
             $item->sub_name = $item->name ? Str::limit($item->name, 20) : Str::limit('товар без названия', 0, 20);
         }
         $newProductsChunk = $newProducts->chunk(2);
-
-//        $tabs = $categories;
-//        foreach($tabs as $tab){
-//            if ($tab->products->count() < 10){
-//                //dump($tab);
-//                $tabs->pull($tab->id);
-//            }
-//        }
-//
-//        dd($tabs->random(6));
 
         return compact(
             'user', 'categories', 'topLevelCategories', 'productsTrend', 'productsHot', 'productSpecOffer',

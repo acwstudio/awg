@@ -21,6 +21,8 @@ Route::namespace('MyStore')->group(function () {
             Route::get('/products', 'ProductController@syncProductsCatalog')->name('sync.product');
             Route::get('/categories', 'CategoryController@syncProductsCategory')->name('sync.category');
             Route::get('/images', 'ImageController@syncProductsImage')->name('sync.image');
+            Route::post('/webhook', 'WebHookController@handle')->name('webhook');
+            //Route::get('/show', 'WebHookController@show')->name('show');
 
         });
     });

@@ -3,7 +3,10 @@
 namespace App\Services\Shop;
 
 use App\Category;
+use App\Product;
 use Auth;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * Class ServiceShopCatalog
@@ -37,6 +40,14 @@ class ServiceShopCatalog
             $item->img_full_name = $item->img_name ? $item->img_name . $item->img_extension : 'product_empty.png';
         }
         $products = $products->take(12);
+        /** @var Collection $products */
+        $mostViewed = $products->random(12);
+        foreach ($mostViewed as $item) {
+            $item->discount_price = $this->discount($item->price, 0.2);
+            $item->percent = 20;
+            $item->sub_name = $item->name ? Str::limit($item->name, 20) : Str::limit('товар без названия', 0, 20);
+        }
+        $mostViewedChunk = $mostViewed->chunk(4);
 
         $user = Auth::guard('customer')->user();
 
@@ -44,6 +55,18 @@ class ServiceShopCatalog
 
         //$subCatalog =
 
-        return compact('user', 'topLevelCategories', 'category', 'products');
+        return compact('user', 'topLevelCategories', 'category', 'products', 'mostViewedChunk');
+    }
+
+    /**
+     * @param $price
+     * @param $percent
+     * @return string
+     */
+    private function discount($price, $percent)
+    {
+        $discount_price = number_format($price - $price * $percent, 2);
+
+        return $discount_price;
     }
 }
