@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Webhook
+ * Class WebhookHandler
  *
  * @package App
  */
-class Webhook extends Model
+class WebhookHandler extends Model
 {
     //
 }

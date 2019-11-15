@@ -33,9 +33,11 @@ class ServiceEventStream
 
             $params = [
                 'entity' => $entity,
-                'redis_key_offset' => 'api:categories:offset',
-                'redis_key_size' => 'api:categories:size',
+                'redis_h' => 'init:category',
+                'redis_key_offset' => 'offset',
+                'redis_key_size' => 'size',
                 'message' => '',
+                'usleep' => 20000,
             ];
 
             $this->streamResponse($params);
@@ -45,9 +47,11 @@ class ServiceEventStream
         if ($entity === "product") {
             $params = [
                 'entity' => $entity,
-                'redis_key_offset' => 'api:products:offset',
-                'redis_key_size' => 'api:products:size',
+                'redis_h' => 'init:product',
+                'redis_key_offset' => 'offset',
+                'redis_key_size' => 'size',
                 'message' => '',
+                'usleep' => 20000,
             ];
 
             $this->streamResponse($params);
@@ -56,9 +60,11 @@ class ServiceEventStream
         if ($entity === "image") {
             $params = [
                 'entity' => $entity,
-                'redis_key_offset' => 'api:images:offset',
-                'redis_key_size' => 'api:images:size',
+                'redis_h' => 'init:image',
+                'redis_key_offset' => 'offset',
+                'redis_key_size' => 'size',
                 'message' => '',
+                'usleep' => 20000,
             ];
 
             $this->streamResponse($params);
@@ -70,9 +76,11 @@ class ServiceEventStream
      */
     private function streamResponse(array $params)
     {
-        if ($params['redis_key_offset']) {
-            $message = $this->redis
-                    ->get($params['redis_key_offset']) / $this->redis->get($params['redis_key_size']) * 100;
+        $offset = $this->redis->hGet($params['redis_h'], $params['redis_key_offset']);
+        $size = $this->redis->hGet($params['redis_h'], $params['redis_key_size']);
+
+        if ($offset) {
+            $message = $offset / $size * 100;
         } else {
             $message = 0;
         }
@@ -80,10 +88,10 @@ class ServiceEventStream
         $data = [
             $params['entity'] => [
                 'message' => (integer)$message,
-                'size' => $this->redis->get($params['redis_key_size']),
-                'offset' => $this->redis->get($params['redis_key_offset']),
-                'entity' => $params['entity']
-            ]
+                'size' => $size,
+                'offset' => $offset,
+            ],
+            'usleep' => 20000,
         ];
 
         $response = new StreamedResponse();
@@ -95,7 +103,7 @@ class ServiceEventStream
             ob_flush();
             flush();
 
-            usleep(20000);
+            usleep($data['usleep']);
         });
 
         $response->headers->set('Content-Type', 'text/event-stream');

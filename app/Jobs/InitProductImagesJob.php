@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,13 +10,14 @@ use Illuminate\Queue\SerializesModels;
 use Spatie\Image\Image;
 use Spatie\Image\Manipulations;
 use Storage;
+use GuzzleHttp\Client;
 
 /**
- * Class SyncImages
+ * Class InitProductImagesJob
  *
  * @package App\Jobs
  */
-class SyncImages implements ShouldQueue
+class InitProductImagesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

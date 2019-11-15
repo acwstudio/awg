@@ -24,6 +24,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'mystore/webhook',
+        'mystore/webhook-handler',
     ];
 }

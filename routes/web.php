@@ -21,8 +21,13 @@ Route::namespace('MyStore')->group(function () {
             Route::get('/products', 'ProductController@syncProductsCatalog')->name('sync.product');
             Route::get('/categories', 'CategoryController@syncProductsCategory')->name('sync.category');
             Route::get('/images', 'ImageController@syncProductsImage')->name('sync.image');
-            Route::post('/webhook', 'WebHookController@handle')->name('webhook');
-            //Route::get('/show', 'WebHookController@show')->name('show');
+            Route::post('/webhook-handler', 'WebhookHandlerController@handle')->name('webhook.handler');
+            Route::get('/webhooks', 'WebhookController@createWebhook')->name('webhook.create');
+
+            Route::get('/init-categories', 'InitController@initCategory')->name('ini_category');
+            Route::get('/init-products', 'InitController@initProduct')->name('ini_product');
+            Route::get('/init-product-images', 'InitController@initProductImage')->name('ini_product_image');
+            Route::get('/init-webhooks', 'InitController@initWebhook')->name('ini_webhook');
 
         });
     });

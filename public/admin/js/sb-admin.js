@@ -46,16 +46,20 @@
     let urlCategory = categoryClick.attr('href');
     let urlImage = imageClick.attr('href');
 
+    let webhookClick = $('#wh-products a');
+    let urlProducts = webhookClick.attr('href');
+
     // Catalog download
     catalogClick.on('click', function (e) {
         catalogClick.css("pointer-events", "none");
         e.preventDefault();
 
         let evtSource = new EventSource("/admin/stream/product", {withCredentials: true});
-
+        $('#amt-catalog-items .progress').html('<div class="progress-bar" style="width:0%"></div>');
+        $('#amt-catalog-items h1').html(0);
         evtSource.onmessage = function (e) {
             let data = JSON.parse(e.data);
-            console.log(urlCatalog);
+            console.log(e.data);
             $('#amt-catalog-items .progress').html('<div class="progress-bar" style="width:' + data.product.message + '%"></div>');
             $('#amt-catalog-items h1').html(data.product.offset);
         };
@@ -80,7 +84,10 @@
     categoryClick.on('click', function (e) {
         e.preventDefault();
         categoryClick.css("pointer-events", "none");
+
         let evtSource = new EventSource("/admin/stream/category", {withCredentials: true});
+        $('#amt-category-items .progress').html('<div class="progress-bar" style="width:0"></div>');
+        $('#amt-category-items h1').html(0);
         evtSource.onmessage = function (e) {
             let data = JSON.parse(e.data);
             console.log(urlCategory);
@@ -128,6 +135,25 @@
             evtSource.close();
 
         });
+    });
+
+    webhookClick.on('click', function (e) {
+        e.preventDefault();
+        console.log(urlProducts);
+        $.ajax({
+
+            url: urlProducts,
+            type: 'get',
+            data: {entity: 'product'},
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            },
+            success: function (result) {
+                console.log(result);
+            }
+        }).done(function (result) {
+            console.log(result);
+        })
     });
 
 })(jQuery); // End of use strict

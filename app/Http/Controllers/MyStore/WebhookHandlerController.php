@@ -3,26 +3,25 @@
 namespace App\Http\Controllers\MyStore;
 
 use App\Http\Controllers\Controller;
-use App\Services\MyStore\ServiceWebHook;
+use App\Services\MyStore\ServiceWebhook;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Log;
 
 /**
- * Class WebHookController
+ * Class WebhookHandlerController
  *
- * @package App\Http\Controllers\MyStore
+ * @package App\Http\Controller\MyStore
  */
-class WebHookController extends Controller
+class WebhookHandlerController extends Controller
 {
     protected $webhook;
 
     /**
-     * WebHookController constructor.
+     * WebHookControllers constructor.
      *
-     * @param ServiceWebHook $webHook
+     * @param ServiceWebhook $webHook
      */
-    public function __construct(ServiceWebHook $webHook)
+    public function __construct(ServiceWebhook $webHook)
     {
         $this->webhook = $webHook;
     }
@@ -32,8 +31,8 @@ class WebHookController extends Controller
      */
     public function handle(Request $request)
     {
-        $status = $this->webhook->srvHandle($request);
-
+        $status = $this->webhook->srvHandle($request->all());
+//        Log::info($request);
         return response()->json(['hello' => 'ok'], $status);
     }
 

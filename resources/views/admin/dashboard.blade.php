@@ -32,7 +32,7 @@
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-outline-info text-outline-info clearfix"
-                               href="{{ route('mystore.sync.category') }}">
+                               href="{{ route('mystore.ini_category') }}">
                                 <span class="float-left">Загрузить категории <i class="fas fa-download"></i></span>
                             </a>
                             <div class="mt-2 progress">
@@ -54,7 +54,7 @@
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-outline-info text-outline-info clearfix"
-                               href="{{ route('mystore.sync.product') }}">
+                               href="{{ route('mystore.ini_product') }}">
                                 <span class="float-left">Загрузить каталог <i class="fas fa-download"></i></span>
                             </a>
                             <div class="mt-2 progress">
@@ -76,12 +76,34 @@
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-outline-info text-outline-info clearfix"
-                               href="{{ route('mystore.sync.image') }}">
+                               href="{{ route('mystore.ini_product_image') }}">
                                 <span class="float-left">Загрузить изображения <i class="fas fa-download"></i></span>
                             </a>
                             <div class="mt-2 progress">
                                 <div class="progress-bar" style="width:0%"></div>
                             </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div id="wh-products" class="card o-hidden h-100">
+                        <div class="card-header text-white bg-dark">
+                            <div class="mr-5">
+                                <span><i class="fas fa-fw fa-check"></i></span><span> Веб хуки товаров</span>
+                            </div>
+                        </div>
+                        <div class="card-body bg-light">
+                            <div class=""><h2 class="text-justify">CREATE PUT DELETE</h2></div>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-outline-info text-outline-info clearfix"
+                               href="{{ route('mystore.webhook.create') }}">
+                                <span class="float-left">Создать веб хуки <i class="fas fa-download"></i></span>
+                            </a>
                         </div>
 
                     </div>

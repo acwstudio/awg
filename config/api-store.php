@@ -14,6 +14,17 @@ return [
     'guzzlehttp' => [
         'base_uri' => 'https://online.moysklad.ru/api/remap/1.1',
         'token' => env('BASIC_AUTH_TOKEN'),
-        'content-type' => 'application/json;charset=utf-8'
-    ]
+        'content-type' => 'application/json;charset=utf-8',
+        'Lognex-Pretty-Print-JSON' => true,
+    ],
+
+    'entities' => [
+        'product'
+    ],
+
+    'actions' => [
+        'create' => 'CREATE',
+        'update' => 'UPDATE',
+        'delete' => 'DELETE',
+    ],
 ];

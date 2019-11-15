@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateWebhooksTable
+ * Class CreateWebhookHandlersTable
  */
-class CreateWebhooksTable extends Migration
+class CreateWebhookHandlersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,20 +16,15 @@ class CreateWebhooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('webhooks', function (Blueprint $table) {
-
+        Schema::create('webhook_handlers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('store_id')->index();
             $table->string('type');
             $table->string('href');
-            $table->string('entity_type');
-            $table->string('url');
-            $table->string('method');
-            $table->string('enabled');
             $table->string('action');
             $table->string('account_id');
+            $table->boolean('queued_up')->default(false);
+            $table->boolean('done')->default(false);
             $table->timestamps();
-
         });
     }
 
@@ -40,6 +35,6 @@ class CreateWebhooksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('webhooks');
+        Schema::dropIfExists('webhook_handlers');
     }
 }
