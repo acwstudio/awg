@@ -37,7 +37,8 @@ class CreateProductsTable extends Migration
             $table->string('uom');
             $table->decimal('price', 10, 2);
             $table->string('article');
-            $table->string('store_image');
+            $table->string('store_img_url');
+            $table->string('store_img_name');
             $table->timestamps();
         });
     }

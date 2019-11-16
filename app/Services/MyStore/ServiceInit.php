@@ -8,6 +8,7 @@ use App\Http\Resources\ResourceProduct;
 use App\Jobs\InitProductImagesJob;
 use App\Product;
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Redis;
 
 /**
@@ -114,7 +115,7 @@ class ServiceInit
                 foreach ($apiProducts->rows as $key => $item) {
 
                     $product = ResourceProduct::make($item)->resolve();
-
+                    //dd($product);
                     if ($product['product_folder']) {
                         $category_id = Category::where('store_id', $product['product_folder'])->first()->id;
                     } else {
@@ -157,27 +158,33 @@ class ServiceInit
      */
     public function srvInitProductImage()
     {
-        $images = Product::where('store_image', '!=', '')->get();
-        $this->redis->hMSet('init:image', ['size' => $images->count()]);
-//        $hasImagestore = Product::where('store_image', '!=', '')->whereNull('img_name')->get();
-        $hasImagestore = Product::where('store_image', '!=', '')->get();
-//        dd($hasImagestore->count());
+        $hasImagestore = Product::where('store_img_url', '!=', '')->get();
+        $this->redis->hMSet('init:image', ['size' => $hasImagestore->count()]);
 
         foreach ($hasImagestore as $key => $item) {
 
+            $img_name_explode = explode('.', $item->store_img_name);
+            $last_key = array_key_last($img_name_explode);
+            //dd($img_name_explode[$last_key]);
             if (count($item->product_images) === 0) {
 
-                $itemsURL = $item->store_image;
+                //$itemsURL = $item->store_img_url;
 
                 $img_name = 'product-' . $item->id . '-' . $item->code;
                 $data = [
-                    'url' => $itemsURL,
+                    'url' => $item->store_img_url,
                     'img_name' => $img_name,
-                    'number' => $key
+                    'number' => $key,
+                    'img_extension' => $img_name_explode[$last_key],
                 ];
+                /** @var Product $item */
+//                $item->product_images()->create([
+//                    'img_name' => $img_name,
+//                    'img_extension' => '.jpg',
+//                ]);
                 Product::find($item->id)->update([
                     'img_name' => $img_name,
-                    'img_extension' => '.jpg',
+                    'img_extension' => $img_name_explode[$last_key],
                 ]);
                 // Queue processing images
                 InitProductImagesJob::dispatch($data);

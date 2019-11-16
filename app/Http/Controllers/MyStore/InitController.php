@@ -41,6 +41,9 @@ class InitController extends Controller
         return $this->init->srvInitProduct();
     }
 
+    /**
+     * @return array
+     */
     public function initProductImage()
     {
         return $this->init->srvInitProductImage();

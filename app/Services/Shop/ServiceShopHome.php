@@ -41,7 +41,7 @@ class ServiceShopHome
         $productsTotal = Product::all();
 
         foreach ($productsTotal as $item) {
-            $item->img_full_name = $item->img_name ? $item->img_name . $item->img_extension : 'product_empty.png';
+            $item->img_full_name = $item->img_name ? $item->img_name . '.' . $item->img_extension : 'product_empty.png';
         }
 
         $productsTrend = $productsTotal->whereBetween('id', [2978, 2998]);

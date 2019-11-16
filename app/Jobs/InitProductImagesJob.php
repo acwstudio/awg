@@ -48,10 +48,10 @@ class InitProductImagesJob implements ShouldQueue
         dump($this->data['number']);
         $image = $client->get($this->data['url'])->getBody()->getContents();
 
-        Storage::disk('public')->put($this->data['img_name'] . '.jpg', $image);
-        $img = Image::load(storage_path('app/public/' . $this->data['img_name'] . '.jpg'));
+        Storage::disk('public')->put($this->data['img_name'] . '.' . $this->data['img_extension'], $image);
+        $img = Image::load(storage_path('app/public/' . $this->data['img_name'] . '.' . $this->data['img_extension']));
         $img->fit(Manipulations::FIT_FILL, 400, 400)->background('bebcc1')->save();
 
-        $redis->set('api:images:offset', $this->data['number']);
+        $redis->hSet('init:image', 'offset', $this->data['number']);
     }
 }

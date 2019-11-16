@@ -37,7 +37,8 @@ class ResourceProduct extends JsonResource
             'uom' => isset($this->resource->uom) ? $this->resource->uom->name : '',
             'price' => $this->resource->buyPrice->value / 100,
             'article' => isset($this->resource->article) ? $this->resource->article : '',
-            'store_image' => isset($this->resource->image) ? $this->resource->image->meta->href : '',
+            'store_img_url' => isset($this->resource->image) ? $this->resource->image->meta->href : '',
+            'store_img_name' => isset($this->resource->image) ? $this->resource->image->filename : '',
         ];
     }
 }

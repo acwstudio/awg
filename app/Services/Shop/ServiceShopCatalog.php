@@ -37,9 +37,10 @@ class ServiceShopCatalog
 
         $products = $category->products;
         foreach ($products as $item) {
-            $item->img_full_name = $item->img_name ? $item->img_name . $item->img_extension : 'product_empty.png';
+            $item->img_full_name = $item->img_name ? $item->img_name . '.' . $item->img_extension : 'product_empty.png';
         }
-        $products = $products->take(12);
+        $products = $products->take(40);
+//        $products = $products->all();
         /** @var Collection $products */
         $mostViewed = $products->random(12);
         foreach ($mostViewed as $item) {
