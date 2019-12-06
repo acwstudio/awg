@@ -24,9 +24,11 @@ Route::namespace('MyStore')->group(function () {
             Route::post('/webhook-handler', 'WebhookHandlerController@handle')->name('webhook.handler');
             Route::get('/webhooks', 'WebhookController@createWebhook')->name('webhook.create');
 
-            Route::get('/init-categories', 'InitController@initCategory')->name('ini_category');
-            Route::get('/init-products', 'InitController@initProduct')->name('ini_product');
-            Route::get('/init-product-images', 'InitController@initProductImage')->name('ini_product_image');
+            Route::get('/init-catalog', 'InitController@initCatalog')->name('init.catalog');
+
+//            Route::get('/init-categories', 'InitController@initCategory')->name('ini_category');
+//            Route::get('/init-products', 'InitController@initProduct')->name('ini_product');
+//            Route::get('/init-product-images', 'InitController@initProductImage')->name('ini_product_image');
             Route::get('/init-webhooks', 'InitController@initWebhook')->name('ini_webhook');
 
         });

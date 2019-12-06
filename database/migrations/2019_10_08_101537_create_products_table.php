@@ -17,28 +17,42 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
+
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->uuid('store_id')->index();
-            $table->uuid('product_folder')->nullable();
-            $table->string('type');
-            $table->boolean('shared');
-            //$table->string('sync_id')->nullable();
-            $table->string('version', 10);
-            $table->dateTime('updated');
-            $table->string('name');
-            $table->string('img_name')->nullable();
-            $table->string('img_extension')->nullable();
-            $table->text('description');
-            $table->string('code');
-            $table->string('ext_code');
-            $table->boolean('archived');
-            $table->string('path_name');
-            $table->string('uom');
-            $table->decimal('price', 10, 2);
-            $table->string('article');
-            $table->string('store_img_url');
-            $table->string('store_img_name');
+            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->unsignedBigInteger('product_image_id')->nullable();
+
+            $table->string('st_href');
+            $table->string('st_type');
+            $table->uuid('st_id')->index();
+            $table->string('st_account_id');
+            $table->string('st_owner_href');
+            $table->boolean('st_shared');
+            $table->string('st_version', 10);
+            $table->dateTime('st_updated');
+            $table->string('st_name');
+            $table->text('st_description');
+            $table->string('st_code');
+            $table->string('st_ext_code');
+            $table->boolean('st_archived');
+            $table->string('st_path_name');
+            $table->string('st_category_id')->nullable();
+            $table->string('st_uom_id');
+            $table->string('st_image_href');
+            $table->decimal('st_min_price', 10, 2)->nullable();
+            $table->decimal('st_sale_price', 10, 2);
+            $table->decimal('st_buy_price', 10, 2);
+            $table->string('st_supplier_href');
+            $table->string('st_article');
+            $table->double('st_weight', 8, 3);
+            $table->double('st_volume', 8, 3);
+            $table->string('st_barcodes');
+            $table->string('st_stock');
+            $table->string('st_reserve');
+            $table->string('st_inTransit');
+            $table->string('st_quantity');
+
             $table->timestamps();
         });
     }

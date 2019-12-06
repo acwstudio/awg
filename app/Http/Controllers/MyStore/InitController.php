@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MyStore;
 
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\Services\MyStore\ServiceInit;
 use Illuminate\Http\Request;
 
@@ -26,27 +27,12 @@ class InitController extends Controller
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function initCategory()
+    public function initCatalog()
     {
-        return $this->init->srvInitCategory();
-    }
-
-    /**
-     * @return array
-     */
-    public function initProduct()
-    {
-        return $this->init->srvInitProduct();
-    }
-
-    /**
-     * @return array
-     */
-    public function initProductImage()
-    {
-        return $this->init->srvInitProductImage();
+        //dd(Product::where('st_id', 'ttttttttt')->get());
+        return $this->init->srvInitCatalog();
     }
 
     public function initWebhook()
