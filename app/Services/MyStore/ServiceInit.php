@@ -2,16 +2,12 @@
 
 namespace App\Services\MyStore;
 
-use App\Category;
-use App\Http\Resources\Category as ResourceCategory;
-use App\Http\Resources\Product as ResourceProduct;
 use App\Jobs\InitProductImagesJob;
 use App\Jobs\PullCategory;
 use App\Jobs\PullProduct;
 use App\Jobs\PullUnit;
 use App\Product;
 use GuzzleHttp\Client;
-use Illuminate\Support\Str;
 use Redis;
 
 /**
@@ -47,11 +43,11 @@ class ServiceInit
             . '/entity/productfolder' . '?expand=productFolder&limit=25';
 
         $urlUnit = $itemsURL = config('api-store.guzzlehttp.base_uri')
-            . '/entity/uom';
+            . '/entity/uom' . '?limit=25';
 
         PullUnit::withChain([
             new PullCategory($urlCategory),
-            new PullProduct($urlProduct)
+            //new PullProduct($urlProduct)
         ])->dispatch($urlUnit);
 
         return 'ok';

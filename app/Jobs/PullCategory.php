@@ -7,6 +7,7 @@ use App\Http\Resources\Category as ResourceCategory;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -40,34 +41,50 @@ class PullCategory implements ShouldQueue
      */
     public function handle(Client $client)
     {
-        $shCategories = Category::all();
+        $shopCategories = Category::all();
 
         do {
-            $stCategories = json_decode($client->get($this->itemsURL)->getBody()->getContents(), true);
-            dump($stCategories['meta']['offset'] . ' Categories');
+            $storeCategories = json_decode($client->get($this->itemsURL)->getBody()->getContents(), true);
 
-            foreach ($stCategories['rows'] as $item) {
+            foreach ($storeCategories['rows'] as $st_key => $row) {
 
-                $stCategory = ResourceCategory::make($item)->resolve();
+                foreach ($shopCategories as $sh_key => $shopCategory) {
 
-                if ($shCategories->contains('st_id', $stCategory['st_id'])) {
-                    $shCategories->where('st_id', $stCategory['st_id'])
-                        ->first()
-                        ->update($stCategory);
-                } else {
-                    Category::insert($stCategory);
+                    if ((string)$shopCategory->st_id === (string)$row['id']) {
+
+                        if ((int)$shopCategory->st_version !== (int)$row['version']) {
+
+                            $storeCategory = ResourceCategory::make($row)->resolve();
+                            $shopCategory->update($storeCategory);
+                        }
+
+                        $shopCategories->forget($sh_key);
+                        unset($storeCategories['rows'][$st_key]);
+                    }
+
                 }
 
             }
 
-            $this->itemsURL = isset($stCategories['meta']['nextHref']) ? $stCategories['meta']['nextHref'] : false;
+            if (count($storeCategories['rows'])) {
+                foreach ($storeCategories['rows'] as $newRow) {
+
+                    $storeCategory = ResourceCategory::make($newRow)->resolve();
+                    Category::insertGetId($storeCategory);
+
+                }
+            }
+
+            $this->itemsURL = isset($storeCategories['meta']['nextHref']) ? $storeCategories['meta']['nextHref'] : false;
 
         } while ($this->itemsURL);
 
-        $shCategories->map(function ($item, $key) use ($shCategories) {
+        $shopCategories = Category::all();
+
+        $shopCategories->map(function ($item, $key) use ($shopCategories) {
             if ($item['st_nested_id']) {
                 /** @var Category $item */
-                $category_id = $shCategories->where('st_id', $item['st_nested_id'])->first()->id;
+                $category_id = $shopCategories->where('st_id', $item['st_nested_id'])->first()->id;
                 $item->update(['category_id' => $category_id]);
             }
         });
