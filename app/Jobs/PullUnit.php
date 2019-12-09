@@ -39,27 +39,41 @@ class PullUnit implements ShouldQueue
      */
     public function handle(Client $client)
     {
-        $shUnits = Unit::all();
+        $shopUnits = Unit::all();
 
         do {
-            $stUnits = json_decode($client->get($this->itemsURL)->getBody()->getContents(), true);
-            dump($stUnits['meta']['offset'] . ' Units');
+            $storeUnits = json_decode($client->get($this->itemsURL)->getBody()->getContents(), true);
+            // update units
+            foreach ($storeUnits['rows'] as $st_key => $row) {
+                foreach ($shopUnits as $sh_key => $shopUnit) {
 
-            foreach ($stUnits['rows'] as $item) {
+                    if ((string)$shopUnit->st_id === (string)$row['id']) {
 
-                $stUnit = ResourceUnit::make($item)->resolve();
+                        if ((int)$shopUnit->st_version !== (int)$row['version']) {
+                            $storeUnit = ResourceUnit::make($row)->resolve();
+                            $shopUnit->update($storeUnit);
+                            info('updated ' . $storeUnit['st_name'] . ' unit');
+                        }
 
-                if ($shUnits->contains('st_id', $stUnit['st_id'])) {
-                    $shUnits->where('st_id', $stUnit['st_id'])
-                        ->first()
-                        ->update($stUnit);
-                } else {
-                    Unit::insert($stUnit);
+                        $shopUnits->forget($sh_key);
+                        unset($storeUnits['rows'][$st_key]);
+
+                    }
+
                 }
 
             }
+            // Add new units
+            if (count($storeUnits['rows'])) {
+                foreach ($storeUnits['rows'] as $newRow) {
 
-            $this->itemsURL = isset($stUnits['meta']['nextHref']) ? $stUnits['meta']['nextHref'] : false;
+                    $storeUnit = ResourceUnit::make($newRow)->resolve();
+                    Unit::insertGetId($storeUnit);
+                    info('added ' . $storeUnit['st_name'] . ' unit');
+                }
+            }
+
+            $this->itemsURL = isset($storeUnits['meta']['nextHref']) ? $storeUnits['meta']['nextHref'] : false;
 
         } while ($this->itemsURL);
     }

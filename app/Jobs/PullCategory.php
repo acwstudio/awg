@@ -45,17 +45,16 @@ class PullCategory implements ShouldQueue
 
         do {
             $storeCategories = json_decode($client->get($this->itemsURL)->getBody()->getContents(), true);
-
+            // Update Categories
             foreach ($storeCategories['rows'] as $st_key => $row) {
-
                 foreach ($shopCategories as $sh_key => $shopCategory) {
 
                     if ((string)$shopCategory->st_id === (string)$row['id']) {
 
                         if ((int)$shopCategory->st_version !== (int)$row['version']) {
-
                             $storeCategory = ResourceCategory::make($row)->resolve();
                             $shopCategory->update($storeCategory);
+                            info('updated ' . $storeCategory['st_name'] . ' category');
                         }
 
                         $shopCategories->forget($sh_key);
@@ -63,14 +62,14 @@ class PullCategory implements ShouldQueue
                     }
 
                 }
-
             }
-
+            // Add new Categories
             if (count($storeCategories['rows'])) {
                 foreach ($storeCategories['rows'] as $newRow) {
 
                     $storeCategory = ResourceCategory::make($newRow)->resolve();
                     Category::insertGetId($storeCategory);
+                    info('added ' . $storeCategory['st_name'] . ' category');
 
                 }
             }
@@ -81,6 +80,7 @@ class PullCategory implements ShouldQueue
 
         $shopCategories = Category::all();
 
+        // make nested categories
         $shopCategories->map(function ($item, $key) use ($shopCategories) {
             if ($item['st_nested_id']) {
                 /** @var Category $item */
