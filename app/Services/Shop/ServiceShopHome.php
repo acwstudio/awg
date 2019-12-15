@@ -40,14 +40,17 @@ class ServiceShopHome
 
         $productsTotal = Product::all();
 
+        /** @var Product $item */
         foreach ($productsTotal as $item) {
-            $item->img_full_name = $item->img_name ? $item->img_name . '.' . $item->img_extension : 'product_empty.png';
+            $img_full_name = $item->store_product_images()->where('active', 1)->first();
+            $item->img_full_name = $img_full_name ? $img_full_name->img_name . '.' . $img_full_name->img_ext : 'product_empty.png';
         }
 
         $productsTrend = $productsTotal->whereBetween('id', [2978, 2998]);
+
         $productsHot = $productsTotal->random(3);
         foreach ($productsHot as $item) {
-            $item->discount_price = $this->discount($item->price, 0.1);
+            $item->discount_price = $this->discount($item->st_price, 0.1);
             $item->percent = 10;
         }
 
@@ -61,9 +64,9 @@ class ServiceShopHome
 
         $productSpecOffer = $productsTotal->random(1);
         foreach ($productSpecOffer as $item) {
-            $item->discount_price = $this->discount($item->price, 0.3);
+            $item->discount_price = $this->discount($item->st_price, 0.3);
             $item->percent = 30;
-            $item->sub_name = $item->name ? Str::limit($item->name, 20) : Str::limit('товар без названия', 0, 20);
+            $item->sub_name = $item->st_name ? Str::limit($item->st_name, 20) : Str::limit('товар без названия', 0, 20);
         }
 
         $newProducts = $productsTotal->random(12);

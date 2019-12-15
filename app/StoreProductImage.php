@@ -13,8 +13,8 @@ class StoreProductImage extends Model
     protected $table = 'store_product_images';
 
     public $fillable = [
-        'product_id', 'img_name', 'img_ext', 'st_href_download', 'st_title', 'st_file_name', 'st_size',
-        'st_updated', 'st_mini_href_download', 'st_tiny_href_download'
+        'product_id', 'img_name', 'img_ext', 'st_id', 'st_href_download', 'st_title', 'st_file_name', 'st_size',
+        'st_updated', 'st_mini_href_download', 'st_tiny_href_download', 'active'
     ];
 
     /**
@@ -24,4 +24,5 @@ class StoreProductImage extends Model
     {
         return $this->belongsTo('App\Product');
     }
+
 }

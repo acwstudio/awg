@@ -4,7 +4,7 @@
         <li class="{{ count($child->children) ? 'has-sub' : '' }}">
             <a href="shop.html">
 
-                {{ $child->name }}
+                {{ $child->st_name }}
 
             </a>
 

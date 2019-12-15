@@ -18,7 +18,6 @@ class Unit extends JsonResource
      */
     public function toArray($request)
     {
-        //dd($this->resource);
         return [
 
             'st_href' => $this->resource['meta']['href'],

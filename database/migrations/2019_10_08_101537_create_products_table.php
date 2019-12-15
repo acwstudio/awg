@@ -29,7 +29,7 @@ class CreateProductsTable extends Migration
             $table->string('st_account_id');
             $table->string('st_owner_href');
             $table->boolean('st_shared');
-            $table->string('st_version', 10);
+            $table->smallInteger('st_version');
             $table->dateTime('st_updated');
             $table->string('st_name');
             $table->text('st_description');
@@ -39,7 +39,7 @@ class CreateProductsTable extends Migration
             $table->string('st_path_name');
             $table->string('st_category_id')->nullable();
             $table->string('st_uom_id');
-            $table->string('st_image_href');
+            $table->string('st_image_href')->nullable();
             $table->decimal('st_min_price', 10, 2)->nullable();
             $table->decimal('st_sale_price', 10, 2);
             $table->decimal('st_buy_price', 10, 2);

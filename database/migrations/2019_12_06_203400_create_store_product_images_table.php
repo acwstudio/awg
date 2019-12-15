@@ -21,7 +21,9 @@ class CreateStoreProductImagesTable extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->string('img_name')->nullable();
             $table->string('img_ext')->nullable();
+            $table->boolean('active');
 
+            $table->string('st_id');
             $table->string('st_href_download');
             $table->string('st_title');
             $table->string('st_file_name');

@@ -9,7 +9,7 @@
                             <li class="">
                                 <a href="{{ route('shop.catalog', $category->id) }}">
                                         {{--<span><img src="{{ asset('shop/img/vertical-menu/1.png') }}" alt="menu-icon"></span>--}}
-                                    {{ $category->name }}
+                                    {{ $category->st_name }}
                                     @if($category->children->count() > 0)
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     @endif

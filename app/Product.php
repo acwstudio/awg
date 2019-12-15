@@ -14,7 +14,7 @@ class Product extends Model
     protected $table = 'products';
 
     public $fillable = [
-        'category_id', 'unit_id', 'product_image_id', 'st_href', 'st_type', 'st_id', 'st_account_id', 'st_owner_href',
+        'category_id', 'unit_id', 'st_href', 'st_type', 'st_id', 'st_account_id', 'st_owner_href',
         'st_shared', 'st_version', 'st_updated', 'st_name', 'st_description', 'st_code', 'st_ext_code', 'st_archived',
         'st_path_name', 'st_category_id', 'st_uom_id', 'st_image_href', 'st_min_price', 'st_sale_price', 'st_buy_price',
         'st_supplier_href', 'st_article', 'st_weight', 'st_volume', 'st_barcodes', 'st_stock', 'st_reserve',
@@ -26,7 +26,7 @@ class Product extends Model
      */
     public function store_product_images(){
 
-        return $this->hasMany('App\StoreProductImage', 'store_product_id');
+        return $this->hasMany('App\StoreProductImage');
 
     }
 
@@ -35,7 +35,7 @@ class Product extends Model
      */
     public function shop_product_images(){
 
-        return $this->hasMany('App\ShopProductImage', 'shop_product_id');
+        return $this->hasMany('App\ShopProductImage', 'product_id');
 
     }
 

@@ -2,10 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Category;
 use App\Http\Resources\Product as ResourceProduct;
 use App\Http\Resources\ProductImage as ResourceProductImage;
 use App\Product;
-use App\StoreProductImage;
+use App\Unit;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -43,56 +44,96 @@ class PullProduct implements ShouldQueue
      */
     public function handle(Client $client)
     {
-        $shProducts = Product::all();
+        $shopUnits = Unit::all();
+        $shopCategories = Category::all();
 
         do {
-            $stProducts = json_decode($client->get($this->itemsURL)->getBody()->getContents(), true);
-            dump($stProducts['meta']['offset'] . ' Products');
 
-            foreach ($stProducts['rows'] as $item) {
-                if ($item['meta']['type'] === 'product') {
+            $storeProducts = json_decode($client->get($this->itemsURL)->getBody()->getContents(), true);
 
-                    $stProduct = ResourceProduct::make($item)->resolve();
+            foreach ($storeProducts['rows'] as $key => $row) {
 
-                    $shProduct = $shProducts->where('st_id', $stProduct['st_id']);
+                $shopProduct = Product::where('st_id', $row['id'])->first();
 
-                    $this->addProduct($shProduct, $stProduct, $item);
+                if (!isset($shopProduct)) {
 
+                    $storeProduct = ResourceProduct::make($row)->resolve();
+
+                    $shopUnit = $shopUnits->where('st_id', $storeProduct['st_uom_id'])->first();
+                    $storeProduct['unit_id'] = isset($shopUnit->id) ? $shopUnit->id : null;
+
+                    $shopCategory = $shopCategories->where('st_id', $storeProduct['st_category_id'])->first();
+                    $storeProduct['category_id'] = isset($shopCategory->id) ? $shopCategory->id : null;
+
+                    $product_id = Product::insertGetId($storeProduct);
+
+                    if (isset($row['image'])) {
+
+                        $storeProductImage = ResourceProductImage::make($row['image'])->resolve();
+                        $storeProductImage['active'] = 1;
+                        $storeProductImage['product_id'] = $product_id;
+                        Product::find($product_id)
+                            ->store_product_images()
+                            ->insertGetId($storeProductImage);
+
+                    }
+
+                } else {
+
+                    if ($shopProduct->st_version !== $row['version']) {
+
+                        $storeProduct = ResourceProduct::make($row)->resolve();
+                        dump($shopProduct->st_version);
+                        $shopProduct->update($storeProduct);
+
+                        if (isset($row['image'])) {
+
+                            $image_href = explode('/', $row['image']['meta']['href']);
+                            $last_key = array_key_last($image_href);
+                            $image_id = $image_href[$last_key];
+
+                            $images = $shopProduct->store_product_images();
+
+                            $storeProductImage = ResourceProductImage::make($row['image'])->resolve();
+                            $storeProductImage['active'] = 1;
+                            $storeProductImage['product_id'] = $shopProduct->id;
+
+                            /** @var Product $images */
+                            if($images->get()->isEmpty()) {
+
+                                $images->insertGetId($storeProductImage);
+                                info($storeProductImage['st_href_download'] . '** newest image');
+
+                            } else {
+
+                                foreach ($images->get() as $item) {
+                                    $item->update(['active' => 0]);
+                                }
+
+                                //$is_image = $images->where('st_id', $image_id)->get()->isNotEmpty();
+                                $image = $images->where('st_id', $image_id)->first();
+
+                                if ($image) {
+
+                                        $image->update($storeProductImage);
+                                        info($storeProductImage['st_href_download'] . '** update image');
+
+                                } else {
+
+                                    $images->insertGetId($storeProductImage);
+                                    info($storeProductImage['st_href_download'] . '** just new image');
+
+                                }
+                            }
+                        }
+                    }
                 }
             }
-
-            $this->itemsURL = isset($stProducts['meta']['nextHref']) ? $stProducts['meta']['nextHref'] : false;
+            dump($storeProducts['meta']['offset']);
+            $this->itemsURL = isset($storeProducts['meta']['nextHref']) ? $storeProducts['meta']['nextHref'] : false;
 
         } while ($this->itemsURL);
+
     }
 
-    /**
-     * @param $shProduct
-     * @param $stProduct
-     * @param $item
-     */
-    private function addProduct($shProduct, $stProduct, $item)
-    {
-        /** @var $shProduct Product */
-        if ($shProduct->count()) {
-
-            $shProduct->first()->update($stProduct);
-
-        } else {
-
-            $product_id = Product::insertGetId($stProduct);
-
-            if (isset($item['image'])) {
-
-                $stProductImage = ResourceProductImage::make($item['image'])->resolve();
-                $store_product_image_id = StoreProductImage::insertGetId($stProductImage);
-
-                StoreProductImage::find($store_product_image_id)->update([
-                    'product_id' => $product_id
-                ]);
-
-            }
-
-        }
-    }
 }

@@ -18,9 +18,13 @@ class ProductImage extends JsonResource
      */
     public function toArray($request)
     {
+        $arr = explode('/', $this->resource['meta']['href']);
+        $last_key = array_key_last($arr);
+
         return [
+            'st_id' => $arr[$last_key],
             'st_href_download' => $this->resource['meta']['href'],
-            'st_title' => $this->resource['title'],
+            'st_title' => trim($this->resource['title']),
             'st_file_name' => $this->resource['filename'],
             'st_size' => $this->resource['size'],
             'st_updated' => $this->resource['updated'],

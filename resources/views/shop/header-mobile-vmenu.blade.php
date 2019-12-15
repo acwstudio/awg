@@ -8,7 +8,7 @@
                 <ul>
                     @foreach($topLevelCategories as $category)
                     <li class="{{ $category->children->count() > 0 ? 'has-sub' : '' }}">
-                        <a href="#">{{ $category->name }} </a>
+                        <a href="#">{{ $category->st_name }} </a>
 
                     @if($category->children->count() > 0)
                         @include('shop.manage-child-mobile',['children' => $category->children])

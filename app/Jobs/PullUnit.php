@@ -57,7 +57,7 @@ class PullUnit implements ShouldQueue
 
                         $shopUnits->forget($sh_key);
                         unset($storeUnits['rows'][$st_key]);
-
+                        break;
                     }
 
                 }

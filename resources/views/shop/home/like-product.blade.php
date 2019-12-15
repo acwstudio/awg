@@ -12,9 +12,9 @@
                         <div class="pro-img">
                             <a href="{{ route('shop.product', $product->id) }}">
                                 <img class="primary-img"
-                                     src="{{ asset("storage/" . $product->img_full_name) }}"
+                                     src="{{ asset("storage/store/" . $product->img_full_name) }}"
                                      alt="single-product">
-                                <img class="secondary-img" src="{{ asset("storage/" . $product->img_full_name) }}"
+                                <img class="secondary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}"
                                      alt="single-product">
                             </a>
                             <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
@@ -24,8 +24,8 @@
                         <!-- Product Content Start -->
                         <div class="pro-content">
                             <div class="pro-info">
-                                <h4><a href="product.html">{{ $product->name }}</a></h4>
-                                <p><span class="price">{{ $product->price }} RUB</span></p>
+                                <h4><a href="product.html">{{ $product->st_name }}</a></h4>
+                                <p><span class="price">{{ $product->st_price }} RUB</span></p>
                             </div>
                             <div class="pro-actions">
                                 <div class="actions-primary">

@@ -5,6 +5,7 @@ namespace App\Services\MyStore;
 use App\Jobs\InitProductImagesJob;
 use App\Jobs\PullCategory;
 use App\Jobs\PullProduct;
+use App\Jobs\PullProductImage;
 use App\Jobs\PullUnit;
 use App\Product;
 use GuzzleHttp\Client;
@@ -37,7 +38,7 @@ class ServiceInit
     public function srvInitCatalog()
     {
         $urlProduct = config('api-store.guzzlehttp.base_uri')
-            . '/entity/assortment' . '?limit=100&expand=productFolder, uom';
+            . '/entity/assortment' . '?filter=type=product&limit=100&expand=productFolder, uom';
 
         $urlCategory = config('api-store.guzzlehttp.base_uri')
             . '/entity/productfolder' . '?expand=productFolder&limit=25';
@@ -47,7 +48,8 @@ class ServiceInit
 
         PullUnit::withChain([
             new PullCategory($urlCategory),
-            //new PullProduct($urlProduct)
+            new PullProduct($urlProduct),
+            new PullProductImage($urlProduct)
         ])->dispatch($urlUnit);
 
         return 'ok';

@@ -34,12 +34,12 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        $this->app->singleton('Redis', function($api) use ($baseUrl ) {
-            $redis = new Redis();
-            $redis->connect('127.0.0.1');
-            $redis->setOption(Redis::OPT_SERIALIZER, 1);
-            return $redis;
-        });
+//        $this->app->singleton('Redis', function($api) use ($baseUrl ) {
+//            $redis = new Redis();
+//            $redis->connect('127.0.0.1');
+//            $redis->setOption(Redis::OPT_SERIALIZER, 1);
+//            return $redis;
+//        });
     }
 
     /**

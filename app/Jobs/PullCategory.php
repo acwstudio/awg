@@ -59,6 +59,7 @@ class PullCategory implements ShouldQueue
 
                         $shopCategories->forget($sh_key);
                         unset($storeCategories['rows'][$st_key]);
+                        break;
                     }
 
                 }

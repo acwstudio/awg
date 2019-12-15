@@ -13,8 +13,8 @@
                             <!-- Product Image Start -->
                             <div class="pro-img">
                                 <a href="product.html">
-                                    <img class="primary-img" src="{{ asset("storage/" . $product->img_full_name) }}" alt="single-product">
-                                    <img class="secondary-img" src="{{ asset("storage/" . $product->img_full_name) }}" alt="single-product">
+                                    <img class="primary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}" alt="single-product">
+                                    <img class="secondary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}" alt="single-product">
                                 </a>
                                 <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
                             </div>
@@ -22,9 +22,9 @@
                             <!-- Product Content Start -->
                             <div class="pro-content">
                                 <div class="pro-info">
-                                    <h4><a href="product.html">{{ $product->name }}</a></h4>
+                                    <h4><a href="product.html">{{ $product->st_name }}</a></h4>
                                     <p><span class="price">{{ $product->discount_price }}</span>
-                                        <del class="prev-price">{{ $product->price }}</del></p>
+                                        <del class="prev-price">{{ $product->st_price }}</del></p>
                                     <div class="label-product l_sale">{{ $product->percent }}<span class="symbol-percent">%</span></div>
                                 </div>
                                 <div class="pro-actions">
@@ -57,9 +57,9 @@
                                     <!-- Product Image Start -->
                                     <div class="pro-img">
                                         <a href="product.html">
-                                            <img class="primary-img" src="{{ asset("storage/" . $product->img_full_name) }}"
+                                            <img class="primary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}"
                                                  alt="single-product">
-                                            <img class="secondary-img" src="{{ asset("storage/" . $product->img_full_name) }}"
+                                            <img class="secondary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}"
                                                  alt="single-product">
                                         </a>
                                         <div class="label-product l_sale">{{ $product->percent }}
@@ -153,7 +153,7 @@
                                     <!-- Product Image Start -->
                                     <div class="pro-img">
                                         <a href="product.html">
-                                            <img class="primary-img" src="{{ asset("storage/" . $product->img_full_name) }}"
+                                            <img class="primary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}"
                                                  alt="single-product">
                                         </a>
                                         <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
@@ -168,13 +168,13 @@
                             <div class="col-lg-6 hot-product2">
                                 <div class="thubnail-desc fix">
                                     <div class="countdown" data-countdown="2025/03/01"></div>
-                                    <h3><a href="product.html">{{ $product->name }}</a></h3>
+                                    <h3><a href="product.html">{{ $product->st_name }}</a></h3>
                                     <div class="pro-price mtb-20">
                                         <p><span class="price">{{ $product->discount_price }} RUB</span>
                                             <del class="prev-price">{{ $product->price }} RUB</del></p>
                                         <div class="label-product l_sale">{{ $product->percent }}<span class="symbol-percent">%</span></div>
                                     </div>
-                                    <p class="mb-30 pro-desc-details">{{ $product->description }}</p>
+                                    <p class="mb-30 pro-desc-details">{{ $product->st_description }}</p>
                                     <div class="pro-actions">
                                         <div class="actions-primary">
                                             <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
@@ -209,9 +209,9 @@
                                 <!-- Product Image Start -->
                                 <div class="pro-img">
                                     <a href="product.html">
-                                        <img class="primary-img" src="{{ asset("storage/" . $product->img_full_name) }}"
+                                        <img class="primary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}"
                                              alt="single-product">
-                                        <img class="secondary-img" src="{{ asset("storage/" . $product->img_full_name) }}"
+                                        <img class="secondary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}"
                                              alt="single-product">
                                     </a>
                                     <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
