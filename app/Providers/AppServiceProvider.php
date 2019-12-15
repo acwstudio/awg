@@ -5,7 +5,6 @@ namespace App\Providers;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Redis;
 
 /**
  * Class AppServiceProvider
@@ -34,12 +33,6 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-//        $this->app->singleton('Redis', function($api) use ($baseUrl ) {
-//            $redis = new Redis();
-//            $redis->connect('127.0.0.1');
-//            $redis->setOption(Redis::OPT_SERIALIZER, 1);
-//            return $redis;
-//        });
     }
 
     /**

@@ -23,6 +23,7 @@ class PullProductImage implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $timeout = 1500;
+    public $retryAfter = 1560;
     private $itemsURL;
 
     /**
@@ -43,14 +44,13 @@ class PullProductImage implements ShouldQueue
      */
     public function handle(Client $client)
     {
+//        $shopProducts =
         $shopProducts = Product::whereNotNull('st_image_href');
-        dump($shopProducts->get()->count());
+        //dump($shopProducts->get()->count());
         foreach ($shopProducts->get() as $shopProduct) {
 
             /** @var Product $shopProduct */
             $images = $shopProduct->store_product_images();
-//            dump($images->get());
-//            if ($images->get() > 1) {
 
                 foreach ($images->get() as $image) {
 
@@ -67,11 +67,11 @@ class PullProductImage implements ShouldQueue
 
                     $storeImage = $client->get($image->st_href_download)->getBody()->getContents();
 
-                    Storage::disk('public')->put($imgName . '.' . $imgExt, $storeImage);
-                    $img = Image::load(storage_path('app/public/' . $imgName . '.' . $imgExt));
+                    Storage::disk('public')->put('/store/' . $imgName . '.' . $imgExt, $storeImage);
+                    $img = Image::load(storage_path('app/public/store/' . $imgName . '.' . $imgExt));
                     $img->fit(Manipulations::FIT_FILL, 400, 400)->background('bebcc1')->save();
                 }
-//            }
+
         }
     }
 }

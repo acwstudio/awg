@@ -25,7 +25,7 @@
                         <div class="pro-content">
                             <div class="pro-info">
                                 <h4><a href="product.html">{{ $product->st_name }}</a></h4>
-                                <p><span class="price">{{ $product->st_price }} RUB</span></p>
+                                <p><span class="price">{{ $product->st_sale_price }} RUB</span></p>
                             </div>
                             <div class="pro-actions">
                                 <div class="actions-primary">

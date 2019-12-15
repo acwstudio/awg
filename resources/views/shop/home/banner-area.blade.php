@@ -3,12 +3,12 @@
     <div class="container big-banner-box">
         <div class="col-img">
             <a href="#">
-                <img src="img/banner/5.jpg" alt="">
+                <img src="{{ asset('shop/img/banner/5.jpg') }}" alt="">
             </a>
         </div>
         <div class="col-img">
             <a href="#">
-                <img src="img/banner/h1-banner3.jpg" alt="">
+                <img src="{{ asset('shop/img/banner/h1-banner3.jpg') }}" alt="">
             </a>
         </div>
     </div>

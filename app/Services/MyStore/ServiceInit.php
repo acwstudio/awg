@@ -2,12 +2,10 @@
 
 namespace App\Services\MyStore;
 
-use App\Jobs\InitProductImagesJob;
 use App\Jobs\PullCategory;
 use App\Jobs\PullProduct;
 use App\Jobs\PullProductImage;
 use App\Jobs\PullUnit;
-use App\Product;
 use GuzzleHttp\Client;
 use Redis;
 
@@ -53,48 +51,6 @@ class ServiceInit
         ])->dispatch($urlUnit);
 
         return 'ok';
-    }
-
-    /**
-     * @return array
-     */
-    public function srvInitProductImage()
-    {
-        $hasImagestore = Product::where('store_img_url', '!=', '')->get();
-        $this->redis->hMSet('init:image', ['size' => $hasImagestore->count()]);
-
-        foreach ($hasImagestore as $key => $item) {
-
-            $img_name_explode = explode('.', $item->store_img_name);
-            $last_key = array_key_last($img_name_explode);
-            //dd($img_name_explode[$last_key]);
-            if (count($item->product_images) === 0) {
-
-                //$itemsURL = $item->store_img_url;
-
-                $img_name = 'product-' . $item->id . '-' . $item->code;
-                $data = [
-                    'url' => $item->store_img_url,
-                    'img_name' => $img_name,
-                    'number' => $key,
-                    'img_extension' => $img_name_explode[$last_key],
-                ];
-                /** @var Product $item */
-//                $item->product_images()->create([
-//                    'img_name' => $img_name,
-//                    'img_extension' => '.jpg',
-//                ]);
-                Product::find($item->id)->update([
-                    'img_name' => $img_name,
-                    'img_extension' => $img_name_explode[$last_key],
-                ]);
-                // Queue processing images
-                InitProductImagesJob::dispatch($data);
-            }
-
-        }
-
-        return ['message' => 'изображения загружены', 'offset' => $this->redis->hGet('init:image', 'offset')];
     }
 
     public function srvInitWebhook()
