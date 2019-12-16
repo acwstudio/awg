@@ -3,7 +3,7 @@
     <div class="sidebar">
         <!-- Sidebar Electronics Categorie Start -->
         <div class="mb-40">
-            <h3 class="sidebar-title">{{ $category->name }}</h3>
+            <h3 class="sidebar-title">{{ $category->st_name }}</h3>
             <div id="shop-cate-toggle" class="category-menu sidebar-menu sidbar-style">
                 <ul>
                     <li class="has-sub"><a href="#">Camera</a>
@@ -134,9 +134,9 @@
                         <!-- Product Image Start -->
                         <div class="pro-img">
                             <a href="product.html">
-                                <img class="primary-img" src="{{ asset("storage/" . $product->img_full_name) }}"
+                                <img class="primary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}"
                                      alt="single-product">
-                                <img class="secondary-img" src="{{ asset("storage/" . $product->img_full_name) }}"
+                                <img class="secondary-img" src="{{ asset("storage/store/" . $product->img_full_name) }}"
                                      alt="single-product">
                             </a>
                             <div class="label-product l_sale">{{ $product->percent }}<span class="symbol-percent">%</span></div>
@@ -146,7 +146,7 @@
                         <div class="pro-content">
                             <h4><a href="product.html">{{ $product->sub_name }}</a></h4>
                             <p><span class="price">{{ $product->discount_price }}</span>
-                                <del class="prev-price">{{ $product->price }}</del>
+                                <del class="prev-price">{{ $product->st_sale_price }}</del>
                             </p>
                         </div>
                         <!-- Product Content End -->

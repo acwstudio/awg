@@ -8,7 +8,7 @@
                 <!-- Single Blog Start -->
                 <div class="single-latest-blog">
                     <div class="blog-img">
-                        <a href="single-blog.html"><img src="img/blog/1.jpg" alt="blog-image"></a>
+                        <a href="single-blog.html"><img src="{{ asset('shop/img/blog/1.jpg') }}" alt="blog-image"></a>
                     </div>
                     <div class="blog-desc">
                         <h4><a href="single-blog.html">At wisi enim ad minim veniam.</a></h4>
@@ -27,7 +27,7 @@
                 <!-- Single Blog Start -->
                 <div class="single-latest-blog">
                     <div class="blog-img">
-                        <a href="single-blog.html"><img src="img/blog/2.jpg" alt="blog-image"></a>
+                        <a href="single-blog.html"><img src="{{ asset('shop/img/blog/2.jpg') }}" alt="blog-image"></a>
                     </div>
                     <div class="blog-desc">
                         <h4><a href="single-blog.html">Dt wisi enim ad minim veniam.</a></h4>
@@ -46,7 +46,7 @@
                 <!-- Single Blog Start -->
                 <div class="single-latest-blog">
                     <div class="blog-img">
-                        <a href="single-blog.html"><img src="img/blog/1.jpg" alt="blog-image"></a>
+                        <a href="single-blog.html"><img src="{{ asset('shop/img/blog/1.jpg') }}" alt="blog-image"></a>
                     </div>
                     <div class="blog-desc">
                         <h4><a href="single-blog.html">At wisi enim ad minim veniam.</a></h4>
@@ -65,7 +65,7 @@
                 <!-- Single Blog Start -->
                 <div class="single-latest-blog">
                     <div class="blog-img">
-                        <a href="single-blog.html"><img src="img/blog/2.jpg" alt="blog-image"></a>
+                        <a href="single-blog.html"><img src="{{ asset('shop/img/blog/2.jpg') }}" alt="blog-image"></a>
                     </div>
                     <div class="blog-desc">
                         <h4><a href="single-blog.html">Dt wisi enim ad minim veniam.</a></h4>

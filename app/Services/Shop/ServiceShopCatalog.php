@@ -36,13 +36,19 @@ class ServiceShopCatalog
         $category = $categories->find($category_id);
 
         $products = $category->products;
+
+        /** @var Product $item */
         foreach ($products as $item) {
-            $item->img_full_name = $item->img_name ? $item->img_name . '.' . $item->img_extension : 'product_empty.png';
+            $img_full_name = $item->store_product_images()->where('active', 1)->first();
+            $item->img_full_name = $img_full_name ?
+                $img_full_name->img_name . '.' . $img_full_name->img_ext : 'product_empty.png';
         }
+
         $products = $products->take(40);
-//        $products = $products->all();
+//
         /** @var Collection $products */
         $mostViewed = $products->random(12);
+
         foreach ($mostViewed as $item) {
             $item->discount_price = $this->discount($item->price, 0.2);
             $item->percent = 20;

@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('shop/css/bootstrap.min.css') }}">
     <!-- Custom css -->
     <link rel="stylesheet" href="{{ asset('shop/css/default.css') }}">
+    <link rel="stylesheet" href="{{ asset('shop/custom-shop.css') }}">
     <!-- Main css -->
     <link rel="stylesheet" href="{{ asset('shop/style.css') }}">
     <!-- Responsive css -->

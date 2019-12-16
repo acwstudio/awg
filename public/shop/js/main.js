@@ -6,7 +6,7 @@ Author Name: HasTech;
 Author URI:;
 Version: 1.0;
 
-NOTE: main.js, All custom script and plugin activation script in this file. 
+NOTE: main.js, All custom script and plugin activation script in this file.
 -----------------------------------------------------
 
     JS INDEX
@@ -31,7 +31,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
     16. Sticky-Menu Activation
     17. Nice Select Activation
     18. Price Slider Activation
-    
+
 ================================================*/
 
 (function ($) {
@@ -81,7 +81,8 @@ NOTE: main.js, All custom script and plugin activation script in this file.
         if (element.hasClass('open')) {
             element.removeClass('open');
             element.find('li').removeClass('open');
-            element.find('ul').slideUp();
+            element.find('ul.category-sub').slideUp();
+            // element.find('ul').slideUp();
         } else {
             element.addClass('open');
             element.children('ul').slideDown();
@@ -236,7 +237,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
             }
         }
     })
-    
+
     /*----------------------------------------------------
     8. Electronics Product Activation
     -----------------------------------------------------*/
@@ -299,7 +300,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
                 }
             }
         })
-    
+
     /*----------------------------------------------------
     9. Best Seller Product Activation
     -----------------------------------------------------*/
@@ -357,7 +358,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
             }
         }
     })
-    
+
     /*----------------------------------------------------
     10. Like Product Activation
     -----------------------------------------------------*/
@@ -448,7 +449,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
             }
         }
     })
-        
+
     /*----------------------------------------------------
     12. New Product Tow For Home-2 Activation
     -----------------------------------------------------*/
@@ -507,7 +508,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
     $('.thumb-menu a').on('click', function () {
         $('.thumb-menu a').removeClass('active');
     })
-    
+
     /*----------------------------
     14. Countdown Js Activation
     -----------------------------*/
@@ -544,12 +545,12 @@ NOTE: main.js, All custom script and plugin activation script in this file.
             $('.header-sticky').removeClass("sticky");
         }
     });
-    
+
     /*----------------------------
     17. Nice Select Activation
     ------------------------------ */
     $('select').niceSelect();
-    
+
     /*----------------------------
     18. Price Slider Activation
     -----------------------------*/

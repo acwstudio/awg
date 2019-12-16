@@ -84,7 +84,7 @@
                     <!-- Thumbnail Description Start -->
                     <div class="col-lg-7">
                         <div class="thubnail-desc fix">
-                            <h3 class="product-header">{{ $product->name }}</h3>
+                            <h3 class="product-header">{{ $product->st_name }}</h3>
                             <div class="rating-summary fix mtb-10">
                                 <div class="rating">
                                     <i class="fa fa-star"></i>
@@ -101,11 +101,11 @@
                             <div class="pro-price mtb-30">
                                 <p class="d-flex align-items-center">
                                     {{--<span class="prev-price">{{ $product->price }}</span>--}}
-                                    <span class="price">{{ $product->price }} RUB</span>
+                                    <span class="price">{{ $product->st_sale_price }} RUB</span>
                                     {{--<span class="saving-price">save 8%</span>--}}
                                 </p>
                             </div>
-                            <p class="mb-20 pro-desc-details">{{ $product->description }}</p>
+                            <p class="mb-20 pro-desc-details">{{ $product->st_description }}</p>
                             <div class="product-size mb-20 clearfix">
                                 <label>Size</label>
                                 <select class="">

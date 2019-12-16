@@ -31,6 +31,8 @@ class ServiceShopHome
      */
     public function srvShopIndex()
     {
+        $user = Auth::guard('customer')->user();
+
         $categories = Category::all();
         $topLevelCategories = Category::where('category_id', '=', null)->with('children')->get();
 
@@ -60,7 +62,8 @@ class ServiceShopHome
         foreach ($mostViewed as $item) {
             $item->discount_price = $this->discount($item->st_sale_price, 0.2);
             $item->percent = 20;
-            $item->sub_name = $item->st_name ? Str::limit($item->st_name, 20) : Str::limit('товар без названия', 0, 20);
+            $item->sub_name = $item->st_name ?
+                Str::limit($item->st_name, 20) : Str::limit('товар без названия', 20);
         }
         $mostViewedChunk = $mostViewed->chunk(4);
 
@@ -68,14 +71,16 @@ class ServiceShopHome
         foreach ($productSpecOffer as $item) {
             $item->discount_price = $this->discount($item->st_sale_price, 0.3);
             $item->percent = 30;
-            $item->sub_name = $item->st_name ? Str::limit($item->st_name, 20) : Str::limit('товар без названия', 0, 20);
+            $item->sub_name = $item->st_name ?
+                Str::limit($item->st_name, 20) : Str::limit('товар без названия', 0, 20);
         }
 
         $newProducts = $productsTotal->random(12);
         foreach ($newProducts as $item) {
             $item->discount_price = $this->discount($item->st_sale_price, 0.1);
             $item->percent = 10;
-            $item->sub_name = $item->st_name ? Str::limit($item->st_name, 20) : Str::limit('товар без названия', 0, 20);
+            $item->sub_name = $item->st_name ?
+                Str::limit($item->st_name, 20) : Str::limit('товар без названия', 0, 20);
         }
         $newProductsChunk = $newProducts->chunk(2);
 

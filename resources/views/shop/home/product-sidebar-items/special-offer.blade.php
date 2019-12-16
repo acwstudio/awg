@@ -17,7 +17,7 @@
                 <div class="pro-info">
                     <h4><a href="product.html">{{ $product->st_name }}</a></h4>
                     <p><span class="price">{{ $product->discount_price }}</span>
-                        <del class="prev-price">{{ $product->st_price }}</del></p>
+                        <del class="prev-price">{{ $product->st_sale_price }}</del></p>
                     <div class="label-product l_sale">{{ $product->percent }}<span class="symbol-percent">%</span></div>
                 </div>
                 <div class="pro-actions">

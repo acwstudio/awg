@@ -50,9 +50,9 @@
                             <!-- Product Image Start -->
                             <div class="pro-img">
                                 <a href="product.html">
-                                    <img class="primary-img" src="{{ asset('storage/' . $product->img_full_name) }}"
+                                    <img class="primary-img" src="{{ asset('storage/store/' . $product->img_full_name) }}"
                                          alt="single-product">
-                                    <img class="secondary-img" src="{{ asset('storage/' . $product->img_full_name) }}"
+                                    <img class="secondary-img" src="{{ asset('storage/store/' . $product->img_full_name) }}"
                                          alt="single-product">
                                 </a>
                                 <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
@@ -62,8 +62,8 @@
                             <!-- Product Content Start -->
                             <div class="pro-content">
                                 <div class="pro-info">
-                                    <h4><a href="product.html">{{ $product->name }}</a></h4>
-                                    <p><span class="price">{{ $product->price }} RUB</span>
+                                    <h4><a href="product.html">{{ $product->st_name }}</a></h4>
+                                    <p><span class="price">{{ $product->st_sale_price }} RUB</span>
                                         {{--<del class="prev-price">$400.50</del>--}}
                                     </p>
                                     {{--<div class="label-product l_sale">30<span class="symbol-percent">%</span></div>--}}
@@ -96,9 +96,9 @@
                         <div class="col-lg-4 col-md-5 col-sm-12">
                             <div class="pro-img">
                                 <a href="product.html">
-                                    <img class="primary-img" src="{{ asset('storage/' . $product->img_full_name) }}"
+                                    <img class="primary-img" src="{{ asset('storage/store/' . $product->img_full_name) }}"
                                          alt="single-product">
-                                    <img class="secondary-img" src="{{ asset('storage/' . $product->img_full_name) }}"
+                                    <img class="secondary-img" src="{{ asset('storage/store/' . $product->img_full_name) }}"
                                          alt="single-product">
                                 </a>
                                 <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
@@ -110,9 +110,9 @@
                         <!-- Product Content Start -->
                         <div class="col-lg-8 col-md-7 col-sm-12">
                             <div class="pro-content hot-product2">
-                                <h4><a href="product.html">{{ $product->name }}</a></h4>
-                                <p><span class="price">{{ $product->price }} RUB</span></p>
-                                <p>{{ $product->description }}</p>
+                                <h4><a href="product.html">{{ $product->st_name }}</a></h4>
+                                <p><span class="price">{{ $product->st_sale_price }} RUB</span></p>
+                                <p>{{ $product->st_description }}</p>
                                 <div class="pro-actions">
                                     <div class="actions-primary">
                                         <a href="cart.html" title="" data-original-title="Add to Cart"> + Add To
