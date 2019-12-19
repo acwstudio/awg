@@ -32,7 +32,7 @@
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-outline-info text-outline-info clearfix"
-                               href="{{ route('mystore.ini_category') }}">
+                               href="{{ route('mystore.init.catalog') }}">
                                 <span class="float-left">Загрузить категории <i class="fas fa-download"></i></span>
                             </a>
                             <div class="mt-2 progress">
@@ -54,7 +54,7 @@
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-outline-info text-outline-info clearfix"
-                               href="{{ route('mystore.ini_product') }}">
+                               href="">
                                 <span class="float-left">Загрузить каталог <i class="fas fa-download"></i></span>
                             </a>
                             <div class="mt-2 progress">
@@ -76,7 +76,7 @@
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-outline-info text-outline-info clearfix"
-                               href="{{ route('mystore.ini_product_image') }}">
+                               href="">
                                 <span class="float-left">Загрузить изображения <i class="fas fa-download"></i></span>
                             </a>
                             <div class="mt-2 progress">
@@ -98,7 +98,7 @@
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-outline-info text-outline-info clearfix"
-                               href="{{ route('mystore.webhook.create') }}">
+                               href="">
                                 <span class="float-left">Создать веб хуки <i class="fas fa-download"></i></span>
                             </a>
                             <div class="mt-2 progress">

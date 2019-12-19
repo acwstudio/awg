@@ -92,6 +92,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
             element.siblings('li').find('ul').slideUp();
         }
     });
+
     $('#cate-toggle>ul>li.has-sub>a').append('<span class="holder"></span>');
 
     /*----------------------------

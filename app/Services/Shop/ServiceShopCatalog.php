@@ -47,7 +47,7 @@ class ServiceShopCatalog
         $products = $products->take(40);
 //
         /** @var Collection $products */
-        $mostViewed = $products->random(12);
+        $mostViewed = $products->random(3);
 
         foreach ($mostViewed as $item) {
             $item->discount_price = $this->discount($item->price, 0.2);

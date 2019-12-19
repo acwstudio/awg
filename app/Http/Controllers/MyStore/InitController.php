@@ -33,11 +33,6 @@ class InitController extends Controller
      */
     public function initCatalog()
     {
-        //dd(Product::find(33)->store_product_images->where('active', true)->first());
-//        $arr = explode('/', "https://online.moysklad.ru/api/remap/1.1/download/7fa96d85-63c2-4622-8e7d-8bb4000be01c");
-//        $last_key = array_key_last($arr);
-//        dd($arr[$last_key]);
-        //dd(Category::skip(10)->take(10)->get());
         return $this->init->srvInitCatalog();
     }
 

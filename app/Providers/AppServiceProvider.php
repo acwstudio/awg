@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Redis;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -31,6 +32,13 @@ class AppServiceProvider extends ServiceProvider
                     'Content-Type' => config('api-store.guzzlehttp.content-type')
                 ],
             ]);
+        });
+
+        $this->app->singleton('Redis', function() use ($baseUrl ) {
+            $redis = new Redis();
+            $redis->connect('127.0.0.1');
+            $redis->setOption(Redis::OPT_SERIALIZER, 1);
+            return $redis;
         });
 
     }

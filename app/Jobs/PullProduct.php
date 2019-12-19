@@ -23,6 +23,7 @@ class PullProduct implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $timeout = 600;
+    public $retryAfter = 650;
     private $itemsURL;
     private $client;
 
