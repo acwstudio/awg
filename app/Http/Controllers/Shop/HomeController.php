@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Shop;
 
+use App\Facades\GuzzleClient;
 use App\Http\Controllers\Controller;
 use App\Services\Shop\ServiceShopHome;
 use Illuminate\Http\Request;
@@ -48,4 +49,5 @@ class HomeController extends Controller
 
         return view('shop.product', $result);
     }
+
 }

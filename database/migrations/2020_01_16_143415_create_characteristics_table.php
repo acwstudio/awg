@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateShopProductImagesTable
+ * Class CreateCharacteristicsTable
  */
-class CreateShopProductImagesTable extends Migration
+class CreateCharacteristicsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,8 +16,14 @@ class CreateShopProductImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('shop_product_images', function (Blueprint $table) {
+        Schema::create('characteristics', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->string('st_href');
+            $table->string('st_type');
+            $table->uuid('st_id');
+            $table->json('st_set_characteristics');
+
             $table->timestamps();
         });
     }
@@ -29,6 +35,6 @@ class CreateShopProductImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shop_product_images');
+        Schema::dropIfExists('characteristics');
     }
 }
