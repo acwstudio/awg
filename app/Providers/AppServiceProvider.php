@@ -21,12 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-        $baseUrl = config('api-store.guzzlehttp.base_uri');
-
-        $this->app->singleton('GuzzleHttp\Client', function($api) use ($baseUrl ) {
+        $this->app->singleton('GuzzleHttp\Client', function() {
             return new Client([
-                'base_uri' => $baseUrl,
+                'base_uri' => config('api-store.guzzlehttp.base_uri'),
                 'headers' => [
                     'Authorization'=> config('api-store.guzzlehttp.token'),
                     'Content-Type' => config('api-store.guzzlehttp.content-type')
@@ -34,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        $this->app->singleton('Redis', function() use ($baseUrl ) {
+        $this->app->singleton('Redis', function() {
             $redis = new Redis();
             $redis->connect('127.0.0.1');
             $redis->setOption(Redis::OPT_SERIALIZER, 1);

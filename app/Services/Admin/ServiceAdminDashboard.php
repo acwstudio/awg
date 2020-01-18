@@ -38,7 +38,8 @@ class ServiceAdminDashboard
         //$this->redis->hSet('init:product', 'offset', $amtPositions);
         $amtCategories = Category::all()->count();
         //$this->redis->hSet('init:category', 'offset', $amtCategories);
-        $amtImages = Product::where('st_image_href', '!=', null)->count();
+//        $amtImages = Product::where('st_image_href', '!=', null)->count();
+        $amtImages = 0;
         //$this->redis->hSet('init:image', 'offset', $amtImages);
         $data = compact('amtPositions', 'amtCategories', 'amtImages');
 

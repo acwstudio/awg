@@ -36,8 +36,8 @@ class InitController extends Controller
         return $this->init->srvInitCatalog();
     }
 
-    public function initWebhook()
-    {
-        return $this->init->srvInitWebhook();
-    }
+//    public function initWebhook()
+//    {
+//        return $this->init->srvInitWebhook();
+//    }
 }

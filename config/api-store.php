@@ -18,8 +18,12 @@ return [
         'Lognex-Pretty-Print-JSON' => true,
     ],
 
-    'entities' => [
-        'product'
+    'types' => [
+        'product' => '/entity/product',
+        'productfolder' => '/entity/productFolder',
+        'variant' => '/entity/variant',
+        'assortment' => '/entity/assortment',
+        'unit' => '/entity/uom'
     ],
 
     'actions' => [

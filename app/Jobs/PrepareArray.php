@@ -2,23 +2,22 @@
 
 namespace App\Jobs;
 
-use App\Category;
 use App\Http\Resources\Category as ResourceCategory;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
 /**
- * Class PullCategory
+ * Class PrepareArray
  * @package App\Jobs
  */
-class PullCategory implements ShouldQueue
+class PrepareArray implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -41,8 +40,8 @@ class PullCategory implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @param Client $client
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function handle(Client $client)
     {

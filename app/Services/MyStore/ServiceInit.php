@@ -2,11 +2,13 @@
 
 namespace App\Services\MyStore;
 
+use App\Jobs\PrepareArray;
 use App\Jobs\PullCategory;
 use App\Jobs\PullProduct;
 use App\Jobs\PullProductImage;
 use App\Jobs\PullUnit;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Redis;
 
 /**
@@ -32,25 +34,44 @@ class ServiceInit
 
     /**
      * @return string
+     * @throws GuzzleException
      */
     public function srvInitCatalog()
     {
-        $urlProduct = config('api-store.guzzlehttp.base_uri')
-            . '/entity/assortment' . '?filter=type=product&limit=100&expand=productFolder, uom';
+        $types = config('api-store.types');
 
-        $urlCategory = config('api-store.guzzlehttp.base_uri')
-            . '/entity/productfolder' . '?expand=productFolder&limit=25';
+        $urlCategory = $this->client->getConfig()['base_uri']
+            . $types['productfolder']
+            . '?expand=productFolder';
 
-        $urlUnit = $itemsURL = config('api-store.guzzlehttp.base_uri')
-            . '/entity/uom' . '?limit=25';
+        $urlUnit = $this->client->getConfig()['base_uri']
+            . $types['unit'];
+
+        $category = 'App\Category';
+        $unit = 'App\Unit';
+
+        //PrepareArray::dispatch($itemsURL, $model);
 
         PullUnit::withChain([
-            new PullCategory($urlCategory),
-            new PullProduct($urlProduct),
-            new PullProductImage($urlProduct)
-        ])->dispatch($urlUnit);
+            new PullCategory($urlCategory, $category),
+            //new PullProduct($urlProduct),
+            //new PullProductImage($urlProduct)
+        ])->dispatch($urlUnit, $unit);
 
         return 'ok';
+    }
+
+    /**
+     * @param array $params
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
+     */
+    private function requestMyStore(array $params)
+    {
+        return $this->client->request($params['method'], $this->client->getConfig()['base_uri'] . $params['type'], [
+            'query' => $params['query'],
+            ]
+        );
     }
 
     public function srvInitWebhook()
