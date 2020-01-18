@@ -3,10 +3,13 @@
 namespace App\Jobs;
 
 use App\Http\Resources\Unit as ResourceUnit;
+use App\Product;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -74,5 +77,18 @@ class PullUnit implements ShouldQueue
             $this->url = isset($storeItems['meta']['nextHref']) ? $storeItems['meta']['nextHref'] : false;
 
         } while ($this->url);
+
+        if ($this->model === 'App\Unit') {
+            /** @var Collection $shopItems */
+            $shopItems = $model->all();
+
+            $shopItems->map(function ($item, $key) use ($shopItems) {
+                // make relation category to products
+                $products = Product::where('st_uom_id', $item->st_id)->get();
+                foreach ($products as $product) {
+                    $product->update(['unit_id' => $item->id]);
+                }
+            });
+        }
     }
 }

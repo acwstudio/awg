@@ -46,8 +46,9 @@ class Product extends JsonResource
             'st_barcodes' => $this->resource['barcodes'][0],
             'st_stock' => $this->resource['stock'],
             'st_reserve' => isset($this->resource['reserve']) ? $this->resource['reserve'] : '',
-            'st_inTransit' => $this->resource['inTransit'],
+            'st_in_transit' => $this->resource['inTransit'],
             'st_quantity' => $this->resource['quantity'],
+            'st_modifications_count' => $this->resource['modificationsCount'],
 
         ];
     }

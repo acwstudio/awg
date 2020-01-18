@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Category;
 use App\Http\Resources\Category as ResourceCategory;
+use App\Product;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -78,12 +79,17 @@ class PullCategory implements ShouldQueue
 
         } while ($this->url);
 
-        // make nested categories
         if ($this->model === 'App\Category') {
-
             /** @var Collection $shopItems */
             $shopItems = $model->all();
+
             $shopItems->map(function ($item, $key) use ($shopItems) {
+                // make relation category to products
+                $products = Product::where('st_category_id', $item->st_id)->get();
+                foreach ($products as $product) {
+                    $product->update(['category_id' => $item->id]);
+                }
+                // make nested categories
                 if ($item['st_nested_id']) {
                     /** @var Model $item */
                     $category_id = $shopItems->where('st_id', $item['st_nested_id'])->first()->id;

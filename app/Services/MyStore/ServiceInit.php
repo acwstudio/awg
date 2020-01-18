@@ -2,11 +2,13 @@
 
 namespace App\Services\MyStore;
 
+use App\Category;
 use App\Jobs\PrepareArray;
 use App\Jobs\PullCategory;
 use App\Jobs\PullProduct;
 use App\Jobs\PullProductImage;
 use App\Jobs\PullUnit;
+use App\Product;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Redis;
@@ -38,7 +40,13 @@ class ServiceInit
      */
     public function srvInitCatalog()
     {
+        //dd(Category::find(53)->products);
         $types = config('api-store.types');
+
+        $urlProduct = $this->client->getConfig()['base_uri']
+            . $types['assortment']
+            . '?expand=productFolder, uom'
+            . '&filter=type=product';
 
         $urlCategory = $this->client->getConfig()['base_uri']
             . $types['productfolder']
@@ -49,29 +57,14 @@ class ServiceInit
 
         $category = 'App\Category';
         $unit = 'App\Unit';
+        $product = 'App\Product';
 
-        //PrepareArray::dispatch($itemsURL, $model);
-
-        PullUnit::withChain([
+        PullProduct::withChain([
             new PullCategory($urlCategory, $category),
-            //new PullProduct($urlProduct),
-            //new PullProductImage($urlProduct)
-        ])->dispatch($urlUnit, $unit);
+            new PullUnit($urlUnit, $unit),
+        ])->dispatch($urlProduct, $product);
 
         return 'ok';
-    }
-
-    /**
-     * @param array $params
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws GuzzleException
-     */
-    private function requestMyStore(array $params)
-    {
-        return $this->client->request($params['method'], $this->client->getConfig()['base_uri'] . $params['type'], [
-            'query' => $params['query'],
-            ]
-        );
     }
 
     public function srvInitWebhook()

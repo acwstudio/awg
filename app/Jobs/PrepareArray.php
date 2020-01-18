@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Http\Resources\Category as ResourceCategory;
+use App\Http\Resources\Product as ResourceProduct;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -50,7 +51,7 @@ class PrepareArray implements ShouldQueue
         do {
 
             $storeItems = json_decode($client->get($this->url)->getBody()->getContents(), true);
-
+            dump($storeItems['meta']['offset']);
             foreach ($storeItems['rows'] as $key => $item) {
                 /** @var Builder $is_item */
                 $is_item = $model->where('st_id', $item['id']);
@@ -58,16 +59,16 @@ class PrepareArray implements ShouldQueue
                 if ($is_item->count()) {
                     //$shop_id = $is_item->first()->id;
                     if ((int)$is_item->first()->st_version !== (int)$item['version']) {
-                        $storeItem = ResourceCategory::make($item)->resolve();
+                        $storeItem = ResourceProduct::make($item)->resolve();
                         $is_item->first()->update($storeItem);
-                        info('updated ' . $storeItem['st_name'] . ' category');
+                        info('updated ' . $storeItem['st_name'] . ' product');
                     }
 
                 } else {
 
-                    $storeItem = ResourceCategory::make($item)->resolve();
+                    $storeItem = ResourceProduct::make($item)->resolve();
                     $model->insertGetId($storeItem);
-                    info('added ' . $storeItem['st_name'] . ' category');
+                    info('added ' . $storeItem['st_name'] . ' product');
 
                 }
 
@@ -78,17 +79,17 @@ class PrepareArray implements ShouldQueue
         } while ($this->url);
 
         // make nested categories
-        if ($this->model === 'App\Category') {
-
-            /** @var Collection $shopItems */
-            $shopItems = $model->all();
-            $shopItems->map(function ($item, $key) use ($shopItems) {
-                if ($item['st_nested_id']) {
-                    /** @var Model $item */
-                    $category_id = $shopItems->where('st_id', $item['st_nested_id'])->first()->id;
-                    $item->update(['category_id' => $category_id]);
-                }
-            });
-        }
+//        if ($this->model === 'App\Category') {
+//
+//            /** @var Collection $shopItems */
+//            $shopItems = $model->all();
+//            $shopItems->map(function ($item, $key) use ($shopItems) {
+//                if ($item['st_nested_id']) {
+//                    /** @var Model $item */
+//                    $category_id = $shopItems->where('st_id', $item['st_nested_id'])->first()->id;
+//                    $item->update(['category_id' => $category_id]);
+//                }
+//            });
+//        }
     }
 }

@@ -38,6 +38,7 @@ class CreateProductsTable extends Migration
             $table->string('st_path_name');
             $table->string('st_category_id')->nullable();
             $table->string('st_uom_id');
+            $table->string('st_image_href')->nullable();
             $table->decimal('st_min_price', 10, 2)->nullable();
             $table->decimal('st_sale_price', 10, 2);
             $table->decimal('st_buy_price', 10, 2);
@@ -50,7 +51,7 @@ class CreateProductsTable extends Migration
             $table->string('st_reserve');
             $table->string('st_in_transit');
             $table->string('st_quantity');
-            $table->smallInteger('st_modification_count');
+            $table->smallInteger('st_modifications_count');
 
             $table->timestamps();
 
